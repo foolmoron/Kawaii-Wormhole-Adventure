@@ -30,7 +30,7 @@ window.onload = function() {
                 KWA.fn.call(this, 'fadeOut', {
                     duration: 1000,
                     onComplete: function() {
-                        this.state.start('datingsim');
+                        this.state.start('datingsim', true, false, KWA.SCRIPT);
                     }
                 });
             }
