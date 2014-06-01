@@ -23,8 +23,17 @@ window.onload = function() {
 
     var create = function() {
         this.stage.setBackgroundColor('#0E3DA9');
+
         var startscreen = this.add.button(0, 0, 'startscreen', function() {  
-            if (canStart) { this.state.start('test'); }
+            if (canStart) {
+                canStart = false;
+                KWA.fn.call(this, 'fadeOut', {
+                    duration: 1000,
+                    onComplete: function() {
+                        this.state.start('datingsim');
+                    }
+                });
+            }
         }, this);
     };
 

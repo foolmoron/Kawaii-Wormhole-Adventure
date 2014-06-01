@@ -1,6 +1,6 @@
 var KWA = window.KWA = window.KWA || {};
 
-(KWA.STATES = KWA.STATES || {})['test'] = {
+(KWA.STATES = KWA.STATES || {})['datingsim'] = {
 
 	NAMEBOX_YOFFSET: 410,
 	NAME_XOFFSET: 10,
@@ -36,6 +36,8 @@ var KWA = window.KWA = window.KWA || {};
         this.input.onDown.add(function(evt) {
         	console.log(evt);
         }, this);
+
+        KWA.fn.call(this, 'fadeIn');
 	},
 
 	update: function() {
