@@ -21,9 +21,7 @@ var KWA = window.KWA = window.KWA || {};
 		fill: '#fff',
 		align: 'left',
 		stroke: 'black',
-		strokeThicknes: 1,
-		wordWrap: true,
-		wordWrapWidth: 790
+		strokeThicknes: 1
 	},
 
 	CHARACTERLEFT_XOFFSET: 200,
@@ -34,6 +32,7 @@ var KWA = window.KWA = window.KWA || {};
 	currentTextTimer: 0,
 
 	DIALOGUE_CHARACTER_LIMIT: 100,
+	DIALOGUE_LINE_CHARACTER_LIMIT: 41,
 	dialogueSegments: [],
 	currentDialogueSegmentIndex: 0,
 
@@ -86,7 +85,7 @@ var KWA = window.KWA = window.KWA || {};
 		this.currentLineIndex = lineIndex;
 		this.currentLine = this.processLine(this.script[lineIndex]);
 
-		this.dialogueSegments = this.splitTextIntoSegments(this.currentLine.dialogue, this.DIALOGUE_CHARACTER_LIMIT);
+		this.dialogueSegments = this.splitTextIntoSegments(this.currentLine.dialogue, this.DIALOGUE_CHARACTER_LIMIT, this.DIALOGUE_LINE_CHARACTER_LIMIT);
 		this.currentDialogueSegmentIndex = 0;
 		
 		this.name.text = this.currentLine.name;
@@ -126,18 +125,26 @@ var KWA = window.KWA = window.KWA || {};
 		}
 	},
 
-	splitTextIntoSegments: function(text, characterLimit) {
+	splitTextIntoSegments: function(text, charactersPerSegment, charactersPerLine) {
 		var segments = [];
 		var words = text.split(' ');
 
 		var currentSegment = '';
+		var currentLineLength = 0;
 		for (var i = 0; i < words.length; i++) {
 			var currentWord = words[i];
-			if (currentSegment.length + currentWord.length + 1 <= characterLimit) {
-				currentSegment += currentWord + " ";
+			if (currentSegment.length + currentWord.length + 1 <= charactersPerSegment) {
+				if (currentLineLength + currentWord.length <= charactersPerLine) {
+					currentSegment += currentWord + " ";
+					currentLineLength += currentWord.length + 1;
+				} else {
+					currentSegment += "\n" + currentWord + " ";
+					currentLineLength = currentWord.length + 1;
+				}
 			} else {
 				segments.push(currentSegment);
 				currentSegment = currentWord + " ";
+				currentLineLength = currentWord.length + 1;
 			}
 		}
 		if (currentSegment.length > 0) {
