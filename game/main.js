@@ -10,6 +10,12 @@ KWA.IMAGES = [
     'background2.png',
     'background3.png',
     'background4.png',
+    'may1.png',
+    'may2.png',
+    'may3.png',
+    'jay1.png',
+    'jay2.png',
+    'jay3.png'
 ];
 
 window.onload = function() {

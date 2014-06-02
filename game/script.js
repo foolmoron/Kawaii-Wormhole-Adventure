@@ -6,6 +6,8 @@ var KWA = window.KWA = window.KWA || {};
 * name - STR - the name of the speaker of this dialogue - default: ''
 * dialogue - STR - the text dialogue in this line - default: ''
 * background - STR - if not null, switches to the background sprite of this name - default: null
+* characterLeft - STR - switches left character to the sprite of this name - default: 'blank'
+* characterRight - STR - switches right character to the sprite of this name - default: 'blank'
 * func - the function that will be called when starting this line - default: null
 *			STR - calls the global function with this name in KWA.fn with the Phaser state as context
 *			FUNC - calls this functions directly with the Phaser state as context
@@ -17,11 +19,11 @@ var KWA = window.KWA = window.KWA || {};
 */
 KWA.SCRIPT = [
 	{name: 'one', dialogue: "0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9", background: 'background3', advance: 2},
-	{label: 'two', name: 'two', dialogue: "hey test2 hey test2 hey test2 hey test2 hey test2 hey test2 hey test2hey test2 hey test2 hey test2 hey test2 hey test2 hey test2 hey test2hey test2 hey test2 hey test2 hey test2 hey test2 hey test2 hey test2", background: 'background2', advance: 3},
-	{name: 'three', dialogue: "hey test3 hey test3 hey test3 hey test3 hey test3 hey test3 hey test3hey test3 hey test3 hey test3 hey test3 hey test3 hey test3 hey test3hey test3 hey test3 hey test3 hey test3 hey test3 hey test3 hey test3", background: 'background1', advance: 'two'},
-	{name: 'four', dialogue: "hey test4 hey test4 hey test4 hey test4 hey test4 hey test4 hey test4hey test4 hey test4 hey test4 hey test4 hey test4 hey test4 hey test4hey test4 hey test4 hey test4 hey test4 hey test4 hey test4 hey test4", background: 'background1', advance: 'restart'},
-	{name: 'five', dialogue: "hey test5 hey test5 hey test5 hey test5 hey test5 hey test5 hey test5", background: 'background4', advance: -1},
-	{label: 'restart', func: 'fadeOut', options: { onComplete: function() { this.state.restart(true, false, KWA.SCRIPT); } }}
+	{label: 'two', name: 'two', dialogue: "hey test2 hey test2 hey test2 hey test2 hey test2 hey test2 hey test2hey test2 hey test2 hey test2 hey test2 hey test2 hey test2 hey test2hey test2 hey test2 hey test2 hey test2 hey test2 hey test2 hey test2", background: 'background2', characterRight: 'may1', advance: 3},
+	{name: 'three', dialogue: "hey test3 hey test3 hey test3 hey test3 hey test3 hey test3 hey test3hey test3 hey test3 hey test3 hey test3 hey test3 hey test3 hey test3hey test3 hey test3 hey test3 hey test3 hey test3 hey test3 hey test3", background: 'background1', characterLeft: 'may2', characterRight: 'jay1', advance: 'two'},
+	{name: 'four', dialogue: "hey test4 hey test4 hey test4 hey test4 hey test4 hey test4 hey test4hey test4 hey test4 hey test4 hey test4 hey test4 hey test4 hey test4hey test4 hey test4 hey test4 hey test4 hey test4 hey test4 hey test4", background: 'background1', characterLeft: 'jay2', characterRight: 'may1', advance: 'restart'},
+	{name: 'five', dialogue: "hey test5 hey test5 hey test5 hey test5 hey test5 hey test5 hey test5", background: 'background4', characterLeft: 'jay3', advance: -1},
+	{label: 'restart', characterLeft: 'may3', func: 'fadeOut', options: { onComplete: function() { this.state.restart(true, false, KWA.SCRIPT); } }}
 ];
 
 //lint the script lines to make sure there are no hard to find errors
@@ -32,6 +34,8 @@ KWA.SCRIPT = [
 		'name',
 		'dialogue',
 		'background',
+		'characterLeft',
+		'characterRight',
 		'func',
 		'options',
 		'advance'

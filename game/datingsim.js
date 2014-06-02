@@ -26,6 +26,9 @@ var KWA = window.KWA = window.KWA || {};
 		wordWrapWidth: 790
 	},
 
+	CHARACTERLEFT_XOFFSET: 200,
+	CHARACTERRIGHT_XOFFSET: 600,
+
 	TEXT_INTERVAL: 1000 / 20, // millis per char
 	currentText: "",
 	currentTextTimer: 0,
@@ -44,6 +47,11 @@ var KWA = window.KWA = window.KWA || {};
         //objects are drawn in create-order so do background stuff first
         this.background = this.add.sprite(this.world.centerX, this.world.centerY, 'blank');
         this.background.anchor.setTo(0.5);      
+
+        this.characterLeft = this.add.sprite(this.CHARACTERLEFT_XOFFSET, this.world.height, 'blank');
+        this.characterLeft.anchor.setTo(0.5, 1);    
+        this.characterRight = this.add.sprite(this.CHARACTERRIGHT_XOFFSET, this.world.height, 'blank');
+        this.characterRight.anchor.setTo(0.5, 1);      
 
         this.namebox = this.add.sprite(0, this.NAMEBOX_YOFFSET, 'namebox');	
         this.name = this.add.text(this.NAME_XOFFSET, this.NAME_YOFFSET, "", this.NAME_OPTIONS);
@@ -67,6 +75,8 @@ var KWA = window.KWA = window.KWA || {};
 			dialogue: '',
 			advance: 1,
 			background: null,
+			characterLeft: 'blank',
+			characterRight: 'blank',
 			func: null,
 			options: null
 		}, line);
@@ -88,6 +98,8 @@ var KWA = window.KWA = window.KWA || {};
 		if (this.currentLine.background) {
 			this.background.loadTexture(this.currentLine.background);
 		}
+		this.characterLeft.loadTexture(this.currentLine.characterLeft);
+		this.characterRight.loadTexture(this.currentLine.characterRight);
 
 		this.mode = this.INPUT_MODE.ADVANCING;
 
