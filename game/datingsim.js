@@ -4,8 +4,6 @@ var KWA = window.KWA = window.KWA || {};
 
 	INPUT_MODE: {ADVANCING: 'advancing', WAITING: 'waiting'},
 
-	DEFAULT_BACKGROUND_SPRITE: 'backgrounddefault',
-
 	NAMEBOX_YOFFSET: 410,
 	NAME_XOFFSET: 125,
 	NAME_YOFFSET: 427,
@@ -44,8 +42,8 @@ var KWA = window.KWA = window.KWA || {};
         this.stage.setBackgroundColor('#B4DDE9');
 
         //objects are drawn in create-order so do background stuff first
-        this.background = this.add.sprite(this.world.centerX, this.world.centerY, this.DEFAULT_BACKGROUND_SPRITE);
-        this.background.anchor.setTo(0.5);
+        this.background = this.add.sprite(this.world.centerX, this.world.centerY, 'blank');
+        this.background.anchor.setTo(0.5);      
 
         this.namebox = this.add.sprite(0, this.NAMEBOX_YOFFSET, 'namebox');	
         this.name = this.add.text(this.NAME_XOFFSET, this.NAME_YOFFSET, "", this.NAME_OPTIONS);

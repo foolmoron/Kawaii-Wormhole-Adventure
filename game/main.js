@@ -5,10 +5,11 @@ KWA.IMAGES = [
     'startscreen.png',
     'dialoguebox.png',
     'namebox.png',
-    'backgrounddefault.png',
+    'blank.png',
     'background1.png',
     'background2.png',
-    'background3.png'
+    'background3.png',
+    'background4.png',
 ];
 
 window.onload = function() {
