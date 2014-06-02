@@ -24,6 +24,11 @@ var KWA = window.KWA = window.KWA || {};
 		strokeThicknes: 1
 	},
 
+	ADVANCEARROW_XOFFSET: 750,
+	ADVANCEARROW_YOFFSET: 566,
+	ADVANCEARROW_YBOUNCE: 5,
+	ADVANCEARROW_BOUNCEDURATION: 325,
+
 	CHARACTERLEFT_XOFFSET: 200,
 	CHARACTERRIGHT_XOFFSET: 600,
 
@@ -59,6 +64,10 @@ var KWA = window.KWA = window.KWA || {};
 
         this.dialoguebox = this.add.sprite(0, this.DIALOGUEBOX_YOFFSET, 'dialoguebox');
         this.dialogue = this.add.text(this.DIALOGUE_XOFFSET, this.DIALOGUE_YOFFSET, "", this.DIALOGUE_OPTIONS);
+
+        this.advancearrow = this.add.sprite(this.ADVANCEARROW_XOFFSET, this.ADVANCEARROW_YOFFSET, 'advancearrow');
+        this.add.tween(this.advancearrow)
+        	.to({y: this.ADVANCEARROW_YOFFSET + this.ADVANCEARROW_YBOUNCE}, this.ADVANCEARROW_BOUNCEDURATION, null, true, 0, Number.MAX_VALUE, true);
 
         this.input.onDown.add(this.onDown, this);
         this.input.onUp.add(this.onUp, this);
@@ -212,8 +221,11 @@ var KWA = window.KWA = window.KWA || {};
 				this.currentTextTimer = 0;
 			}
 			this.dialogue.text = this.currentText;
+
+			this.advancearrow.visible = false;
 			break;
 		case this.INPUT_MODE.WAITING:
+			this.advancearrow.visible = true;
 			break;
 		}
 	}

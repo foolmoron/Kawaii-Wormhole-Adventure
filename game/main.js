@@ -5,6 +5,7 @@ KWA.IMAGES = [
     'startscreen.png',
     'dialoguebox.png',
     'namebox.png',
+    'advancearrow.png',
     'blank.png',
     'background1.png',
     'background2.png',
