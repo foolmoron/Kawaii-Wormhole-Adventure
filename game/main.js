@@ -20,6 +20,8 @@ KWA.IMAGES = [
 
 window.onload = function() {
     var game,
+        createText,
+        canCreateText = false,
         canStart = false
         ;
 
@@ -46,9 +48,16 @@ window.onload = function() {
                 });
             }
         }, this);
+
+        canCreateText = true;
     };
 
-    var createText = function() {
+    createText = function() {
+        if (!canCreateText) {
+            game.time.events.add(Phaser.Timer.SECOND, createText, game);
+            return;
+        }
+
         var text = this.add.text(this.world.centerX, this.world.height - 10, "click to start", {font:"50px Droid Sans Mono", fill: "#000", align: "center"});
         text.anchor.setTo(0.5, 1);
 
