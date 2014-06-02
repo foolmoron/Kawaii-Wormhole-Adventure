@@ -8,6 +8,7 @@ var KWA = window.KWA = window.KWA || {};
 * background - STR - if not null, switches to the background sprite of this name - default: null
 * characterLeft - STR - switches left character to the sprite of this name - default: 'blank'
 * characterRight - STR - switches right character to the sprite of this name - default: 'blank'
+* cancelFastForward - bool - if set to true, forcibly disables fastforward at start of this line - default: false
 * func - the function that will be called when starting this line - default: null
 *			STR - calls the global function with this name in KWA.fn with the Phaser state as context
 *			FUNC - calls this functions directly with the Phaser state as context
@@ -23,7 +24,7 @@ KWA.SCRIPT = [
 	{name: 'three', dialogue: "hey test3 hey test3 hey test3 hey test3 hey test3 hey test3 hey test3hey test3 hey test3 hey test3 hey test3 hey test3 hey test3 hey test3hey test3 hey test3 hey test3 hey test3 hey test3 hey test3 hey test3", background: 'background1', characterLeft: 'may2', characterRight: 'jay1', advance: 'two'},
 	{name: 'four', dialogue: "hey test4 hey test4 hey test4 hey test4 hey test4 hey test4 hey test4hey test4 hey test4 hey test4 hey test4 hey test4 hey test4 hey test4hey test4 hey test4 hey test4 hey test4 hey test4 hey test4 hey test4", background: 'background1', characterLeft: 'jay2', characterRight: 'may1', advance: 'restart'},
 	{name: 'five', dialogue: "hey test5 hey test5 hey test5 hey test5 hey test5 hey test5 hey test5", background: 'background4', characterLeft: 'jay3', advance: -1},
-	{label: 'restart', characterLeft: 'may3', func: 'fadeOut', options: { onComplete: function() { this.state.restart(true, false, KWA.SCRIPT); } }}
+	{label: 'restart', characterLeft: 'may3', cancelFastForward: true, func: 'fadeOut', options: { onComplete: function() { this.state.restart(true, false, KWA.SCRIPT); } }}
 ];
 
 //lint the script lines to make sure there are no hard to find errors
@@ -36,6 +37,7 @@ KWA.SCRIPT = [
 		'background',
 		'characterLeft',
 		'characterRight',
+		'cancelFastForward',
 		'func',
 		'options',
 		'advance'
