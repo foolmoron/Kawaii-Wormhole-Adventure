@@ -23,7 +23,7 @@ var KWA = window.KWA = window.KWA || {};
 		stroke: 'black',
 		strokeThicknes: 1,
 		wordWrap: true,
-		wordWrapWidth: 798
+		wordWrapWidth: 790
 	},
 
 	TEXT_INTERVAL: 1000 / 20, // millis per char
