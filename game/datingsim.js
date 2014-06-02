@@ -31,8 +31,9 @@ var KWA = window.KWA = window.KWA || {};
 	currentText: "",
 	currentTextTimer: 0,
 
-	DIALOGUE_CHARACTER_LIMIT: 100,
 	DIALOGUE_LINE_CHARACTER_LIMIT: 41,
+	DIALOGUE_LINE_NUMBER_LIMIT: 3,
+	DIALOGUE_LAST_LINE_CUTOFF: 5,
 	dialogueSegments: [],
 	currentDialogueSegmentIndex: 0,
 
@@ -85,7 +86,7 @@ var KWA = window.KWA = window.KWA || {};
 		this.currentLineIndex = lineIndex;
 		this.currentLine = this.processLine(this.script[lineIndex]);
 
-		this.dialogueSegments = this.splitTextIntoSegments(this.currentLine.dialogue, this.DIALOGUE_CHARACTER_LIMIT, this.DIALOGUE_LINE_CHARACTER_LIMIT);
+		this.dialogueSegments = this.splitTextIntoSegments(this.currentLine.dialogue, this.DIALOGUE_LINE_NUMBER_LIMIT, this.DIALOGUE_LINE_CHARACTER_LIMIT, this.DIALOGUE_LAST_LINE_CUTOFF);
 		this.currentDialogueSegmentIndex = 0;
 		
 		this.name.text = this.currentLine.name;
@@ -125,26 +126,32 @@ var KWA = window.KWA = window.KWA || {};
 		}
 	},
 
-	splitTextIntoSegments: function(text, charactersPerSegment, charactersPerLine) {
+	splitTextIntoSegments: function(text, linesPerSegment, charactersPerLine, lastLineCutoff) {
 		var segments = [];
 		var words = text.split(' ');
 
 		var currentSegment = '';
+		var currentLineCount = 0;
 		var currentLineLength = 0;
 		for (var i = 0; i < words.length; i++) {
 			var currentWord = words[i];
-			if (currentSegment.length + currentWord.length + 1 <= charactersPerSegment) {
-				if (currentLineLength + currentWord.length <= charactersPerLine) {
+			if (currentLineCount < linesPerSegment) {
+				var finalCharsPerLine = charactersPerLine - ((currentLineCount == linesPerSegment - 1) ? lastLineCutoff : 0);
+				if (currentLineLength + currentWord.length <= finalCharsPerLine) {
 					currentSegment += currentWord + " ";
 					currentLineLength += currentWord.length + 1;
 				} else {
-					currentSegment += "\n" + currentWord + " ";
-					currentLineLength = currentWord.length + 1;
+					currentSegment += "\n";
+					currentLineLength = 0;
+					currentLineCount++;
+					i--; // reprocess current word
 				}
 			} else {
 				segments.push(currentSegment);
-				currentSegment = currentWord + " ";
-				currentLineLength = currentWord.length + 1;
+				currentSegment = "";
+				currentLineLength = 0;
+				currentLineCount = 0;
+				i--; // reprocess current word
 			}
 		}
 		if (currentSegment.length > 0) {
