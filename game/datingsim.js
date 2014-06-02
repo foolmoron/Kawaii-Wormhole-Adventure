@@ -4,6 +4,8 @@ var KWA = window.KWA = window.KWA || {};
 
 	INPUT_MODE: {ADVANCING: 'advancing', WAITING: 'waiting'},
 
+	DEFAULT_BACKGROUND_SPRITE: 'backgrounddefault',
+
 	NAMEBOX_YOFFSET: 410,
 	NAME_XOFFSET: 125,
 	NAME_YOFFSET: 427,
@@ -41,10 +43,15 @@ var KWA = window.KWA = window.KWA || {};
 	create: function() {
         this.stage.setBackgroundColor('#B4DDE9');
 
-        var namebox = this.add.sprite(0, this.NAMEBOX_YOFFSET, 'namebox');	
-        var dialoguebox = this.add.sprite(0, this.DIALOGUEBOX_YOFFSET, 'dialoguebox');
+        //objects are drawn in create-order so do background stuff first
+        this.background = this.add.sprite(this.world.centerX, this.world.centerY, this.DEFAULT_BACKGROUND_SPRITE);
+        this.background.anchor.setTo(0.5);
+
+        this.namebox = this.add.sprite(0, this.NAMEBOX_YOFFSET, 'namebox');	
         this.name = this.add.text(this.NAME_XOFFSET, this.NAME_YOFFSET, "", this.NAME_OPTIONS);
         this.name.anchor.setTo(0.5);
+
+        this.dialoguebox = this.add.sprite(0, this.DIALOGUEBOX_YOFFSET, 'dialoguebox');
         this.dialogue = this.add.text(this.DIALOGUE_XOFFSET, this.DIALOGUE_YOFFSET, "", this.DIALOGUE_OPTIONS);
 
         this.input.onDown.add(this.onDown, this);
@@ -61,6 +68,7 @@ var KWA = window.KWA = window.KWA || {};
 			name: '',
 			dialogue: '',
 			advance: 1,
+			background: null,
 			func: null,
 			options: null
 		}, line);
@@ -78,6 +86,10 @@ var KWA = window.KWA = window.KWA || {};
 
 		this.currentText = '';
 		this.currentTextTimer = 0;
+
+		if (this.currentLine.background) {
+			this.background.loadTexture(this.currentLine.background);
+		}
 
 		this.mode = this.INPUT_MODE.ADVANCING;
 

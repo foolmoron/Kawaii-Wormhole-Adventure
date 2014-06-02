@@ -4,7 +4,11 @@ KWA.IMAGE_DIR = 'img/';
 KWA.IMAGES = [
     'startscreen.png',
     'dialoguebox.png',
-    'namebox.png'
+    'namebox.png',
+    'backgrounddefault.png',
+    'background1.png',
+    'background2.png',
+    'background3.png'
 ];
 
 window.onload = function() {
