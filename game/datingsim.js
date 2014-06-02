@@ -30,6 +30,10 @@ var KWA = window.KWA = window.KWA || {};
 	currentText: "",
 	currentTextTimer: 0,
 
+	DIALOGUE_CHARACTER_LIMIT: 100,
+	dialogueSegments: [],
+	currentDialogueSegmentIndex: 0,
+
 	init: function(script) {
 		this.script = script;
 	},
@@ -65,6 +69,9 @@ var KWA = window.KWA = window.KWA || {};
 	advanceToLine: function(lineIndex) {
 		this.currentLineIndex = lineIndex;
 		this.currentLine = this.processLine(this.script[lineIndex]);
+
+		this.dialogueSegments = this.splitTextIntoSegments(this.currentLine.dialogue, this.DIALOGUE_CHARACTER_LIMIT);
+		this.currentDialogueSegmentIndex = 0;
 		
 		this.name.text = this.currentLine.name;
 		this.dialogue.text = '';
@@ -82,6 +89,40 @@ var KWA = window.KWA = window.KWA || {};
 				KWA.fn.call(this, func, this.currentLine.options);
 			}
 		}
+	},
+
+	advanceSegment: function() {
+		if (this.currentDialogueSegmentIndex < this.dialogueSegments.length) {
+			this.currentDialogueSegmentIndex++;
+
+			this.dialogue.text = '';
+
+			this.currentText = '';
+			this.currentTextTimer = 0;
+
+			this.mode = this.INPUT_MODE.ADVANCING;
+		}
+	},
+
+	splitTextIntoSegments: function(text, characterLimit) {
+		var segments = [];
+		var words = text.split(' ');
+
+		var currentSegment = '';
+		for (var i = 0; i < words.length; i++) {
+			var currentWord = words[i];
+			if (currentSegment.length + currentWord.length + 1 <= characterLimit) {
+				currentSegment += currentWord + " ";
+			} else {
+				segments.push(currentSegment);
+				currentSegment = currentWord + " ";
+			}
+		}
+		if (currentSegment.length > 0) {
+			segments.push(currentSegment);
+		}
+
+		return (segments.length > 0) ? segments : ['']; // always return at least one segment
 	},
 
 	getNextLineIndex: function(line) { 
@@ -103,12 +144,16 @@ var KWA = window.KWA = window.KWA || {};
 	onDown: function(pointer) {
 		switch (this.mode) {
 		case this.INPUT_MODE.ADVANCING:
-			this.currentText = this.currentLine.dialogue;
+			this.currentText = this.dialogueSegments[this.currentDialogueSegmentIndex];
 			this.dialogue.text = this.currentText;
 			this.mode = this.INPUT_MODE.WAITING;
 			break;
 		case this.INPUT_MODE.WAITING:
-			this.advanceToLine(this.getNextLineIndex(this.currentLine));
+			if (this.currentDialogueSegmentIndex == this.dialogueSegments.length - 1) {
+				this.advanceToLine(this.getNextLineIndex(this.currentLine));
+			} else {
+				this.advanceSegment();
+			}
 			break;
 		}
 	},
@@ -121,9 +166,10 @@ var KWA = window.KWA = window.KWA || {};
 		case this.INPUT_MODE.ADVANCING:
 			this.currentTextTimer += this.time.elapsed;
 			if (this.currentTextTimer >= this.TEXT_INTERVAL) {
+				var currentDialogueSegment = this.dialogueSegments[this.currentDialogueSegmentIndex];
 				var newCharIndex = this.currentText.length;
-				if (newCharIndex < this.currentLine.dialogue.length) {
-					this.currentText += this.currentLine.dialogue.charAt(newCharIndex);
+				if (newCharIndex < currentDialogueSegment.length) {
+					this.currentText += currentDialogueSegment.charAt(newCharIndex);
 				} else {
 					this.mode = this.INPUT_MODE.WAITING;					
 				}

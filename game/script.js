@@ -15,10 +15,10 @@ var KWA = window.KWA = window.KWA || {};
 *			FUNC - takes (lineIndex, lineObject) as parameters with the Phaser state as context and returns either an int or a string
 */
 KWA.SCRIPT = [
-	{name: 'one', dialogue: "hey test1 hey test1 hey test1 hey test1 hey test1 hey test1 hey test1", func: function() { console.log('1'); }, advance: 2},
-	{label: 'two', name: 'two', dialogue: "hey test2 hey test2 hey test2 hey test2 hey test2 hey test2 hey test2", func: function() { console.log('2'); }, advance: function(i, line) { console.log(this); return 2; }},
-	{name: 'three', dialogue: "hey test3 hey test3 hey test3 hey test3 hey test3 hey test3 hey test3", func: function() { console.log('3'); }, advance: 'two'},
-	{name: 'four', dialogue: "hey test4 hey test4 hey test4 hey test4 hey test4 hey test4 hey test4", func: function() { console.log('4'); }, advance: 'restart'},
+	{name: 'one', dialogue: "0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9", func: function() { console.log('1'); }, advance: 2},
+	{label: 'two', name: 'two', dialogue: "hey test2 hey test2 hey test2 hey test2 hey test2 hey test2 hey test2hey test2 hey test2 hey test2 hey test2 hey test2 hey test2 hey test2hey test2 hey test2 hey test2 hey test2 hey test2 hey test2 hey test2", func: function() { console.log('2'); }, advance: function(i, line) { console.log(this); return 3; }},
+	{name: 'three', dialogue: "hey test3 hey test3 hey test3 hey test3 hey test3 hey test3 hey test3hey test3 hey test3 hey test3 hey test3 hey test3 hey test3 hey test3hey test3 hey test3 hey test3 hey test3 hey test3 hey test3 hey test3", func: function() { console.log('3'); }, advance: 'two'},
+	{name: 'four', dialogue: "hey test4 hey test4 hey test4 hey test4 hey test4 hey test4 hey test4hey test4 hey test4 hey test4 hey test4 hey test4 hey test4 hey test4hey test4 hey test4 hey test4 hey test4 hey test4 hey test4 hey test4", func: function() { console.log('4'); }, advance: 'restart'},
 	{name: 'five', dialogue: "hey test5 hey test5 hey test5 hey test5 hey test5 hey test5 hey test5", func: function() { console.log('5'); }},
 	{label: 'restart', func: 'fadeOut', options: { onComplete: function() { this.state.restart(true, false, KWA.SCRIPT); } }}
 ];
