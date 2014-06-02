@@ -1,7 +1,7 @@
 var KWA = window.KWA = window.KWA || {};
 
 /*
-* The script is made up of lines.  Each line has the following options:
+* The script is made up of lines.  Each line has the following properties:
 * label - STR - a keyword which allows other lines to jump to this line - default: null
 * name - STR - the name of the speaker of this dialogue - default: ''
 * dialogue - STR - the text dialogue in this line - default: ''
