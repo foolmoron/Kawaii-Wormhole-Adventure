@@ -29,7 +29,7 @@ var KWA = window.KWA = window.KWA || {};
 	CHARACTERLEFT_XOFFSET: 200,
 	CHARACTERRIGHT_XOFFSET: 600,
 
-	TEXT_INTERVAL: 1000 / 20, // millis per char
+	TEXT_INTERVAL: 1000 / 50, // millis per char
 	currentText: "",
 	currentTextTimer: 0,
 
