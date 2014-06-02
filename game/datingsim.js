@@ -41,7 +41,7 @@ var KWA = window.KWA = window.KWA || {};
 	currentText: "",
 	currentTextTimer: 0,
 
-	FASTFORWARD_INTERVAL: 1000/8, // millis per dialogue segment
+	FASTFORWARD_INTERVAL: 1000/10, // millis per dialogue segment
 	currentFastForwardTimer: 0,
 
 	DIALOGUE_LINE_CHARACTER_LIMIT: 41,
@@ -83,7 +83,22 @@ var KWA = window.KWA = window.KWA || {};
 
         this.input.onDown.add(this.onDown, this);
         this.input.onUp.add(this.onUp, this);
-        this.input.keyboard.addCallbacks(this, this.onKeyDown, this.onKeyUp);
+
+		//use special logic on key events to make it more "gamey" and less "text-editory"
+        this.keysDown = {}; 
+        this.input.keyboard.addCallbacks(this, function(keyEvent) {
+			var key = keyEvent.which || keyEvent.keyCode;
+			if (!this.keysDown[key]) { // keyDown can only be called once before the corresponding keyUp
+				this.keysDown[key] = true;
+				this.onKeyDown(key);
+			}
+        }, function(keyEvent) {
+			var key = keyEvent.which || keyEvent.keyCode;
+			if (this.keysDown[key]) { // keyUp can only be called after the corresponding keyDown
+				delete this.keysDown[key];
+				this.onKeyUp(key);
+			}
+        });
 
         this.advanceToLine(0);
 		this.mode = this.INPUT_MODE.ADVANCING;
@@ -238,8 +253,7 @@ var KWA = window.KWA = window.KWA || {};
 	onUp: function(pointer) {
 
 	},
-	onKeyDown: function(keyEvent) {
-		var key = keyEvent.which || keyEvent.keyCode;
+	onKeyDown: function(key) {
 		if (key == 39 || // right arrow
 			key == 40 || // down arrow
 			key == 32) { // spacebar
@@ -248,8 +262,7 @@ var KWA = window.KWA = window.KWA || {};
 			this.fastForward(true);
 		}
 	},
-	onKeyUp: function(keyEvent) {
-		var key = keyEvent.which || keyEvent.keyCode;
+	onKeyUp: function(key) {
 		if (key == 16) { // shift
 			this.fastForward(false);
 		}
