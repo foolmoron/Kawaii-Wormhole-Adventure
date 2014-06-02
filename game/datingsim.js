@@ -71,6 +71,7 @@ var KWA = window.KWA = window.KWA || {};
 
         this.input.onDown.add(this.onDown, this);
         this.input.onUp.add(this.onUp, this);
+        this.input.keyboard.addCallbacks(this, this.onKeyDown, this.onKeyUp);
 
         this.advanceToLine(0);
 
@@ -186,7 +187,7 @@ var KWA = window.KWA = window.KWA || {};
 		}
 	},
 
-	onDown: function(pointer) {
+	advanceText: function() {
 		switch (this.mode) {
 		case this.INPUT_MODE.ADVANCING:
 			this.currentText = this.dialogueSegments[this.currentDialogueSegmentIndex];
@@ -202,7 +203,23 @@ var KWA = window.KWA = window.KWA || {};
 			break;
 		}
 	},
+
+
+	onDown: function(pointer) {
+		this.advanceText();
+	},
 	onUp: function(pointer) {
+
+	},
+	onKeyDown: function(keyEvent) {
+		var key = keyEvent.which || keyEvent.keyCode;
+		if (key == 39 || // right arrow
+			key == 40 || // down arrow
+			key == 32) { // spacebar
+			this.advanceText();
+		}
+	},
+	onKeyUp: function(keyEvent) {
 
 	},
 
