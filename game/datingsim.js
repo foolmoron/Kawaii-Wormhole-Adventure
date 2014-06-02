@@ -236,8 +236,8 @@ var KWA = window.KWA = window.KWA || {};
 					this.mode = this.INPUT_MODE.WAITING;					
 				}
 				this.currentTextTimer = 0;
+				this.dialogue.text = this.currentText;
 			}
-			this.dialogue.text = this.currentText;
 
 			this.advancearrow.visible = false;
 			break;
