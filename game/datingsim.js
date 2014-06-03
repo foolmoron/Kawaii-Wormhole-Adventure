@@ -2,7 +2,7 @@ var KWA = window.KWA = window.KWA || {};
 
 (KWA.STATES = KWA.STATES || {})['datingsim'] = {
 
-	INPUT_MODE: {ADVANCING: 'advancing', WAITING: 'waiting', FASTFORWARD: 'fastforward'},
+	INPUT_MODE: {ADVANCING: 'advancing', WAITING: 'waiting', CHOICE: 'choice', FASTFORWARD: 'fastforward'},
 
 	NAMEBOX_YOFFSET: 410,
 	NAME_XOFFSET: 125,
@@ -34,6 +34,10 @@ var KWA = window.KWA = window.KWA || {};
 	FASTFORWARDARROW_XBOUNCE: 5,
 	FASTFORWARDARROW_BOUNCEDURATION: 325,
 
+	QUESTIONMARK_XOFFSET: 765,
+	QUESTIONMARK_YOFFSET: 572,
+	QUESTIONMARK_SPINDURATION: 2000,
+
 	CHARACTERLEFT_XOFFSET: 200,
 	CHARACTERRIGHT_XOFFSET: 600,
 
@@ -49,6 +53,17 @@ var KWA = window.KWA = window.KWA || {};
 	DIALOGUE_LAST_LINE_CUTOFF: 5,
 	dialogueSegments: [],
 	currentDialogueSegmentIndex: 0,
+
+	MAX_CHOICES: 4,
+	CHOICES_XOFFSET: 400,
+	CHOICES_YOFFSET: 150,
+	CHOICES_YGAP: 50,
+	CHOICES_SHEET: 'choicebox',
+	CHOICETEXT_OPTIONS: {
+		font: '24px Droid Sans Mono',
+		fill: '#fff',
+		align: 'center'
+	},
 
 	init: function(script) {
 		this.script = script;
@@ -73,6 +88,16 @@ var KWA = window.KWA = window.KWA || {};
         this.dialoguebox = this.add.sprite(0, this.DIALOGUEBOX_YOFFSET, 'dialoguebox');
         this.dialogue = this.add.text(this.DIALOGUE_XOFFSET, this.DIALOGUE_YOFFSET, "", this.DIALOGUE_OPTIONS);
 
+        for (var i = 0; i < this.MAX_CHOICES; i++) {
+        	var newChoiceBox = this['choicebox' + i] = this.add.button(this.CHOICES_XOFFSET, this.CHOICES_YOFFSET + (this.CHOICES_YGAP * i), this.CHOICES_SHEET, this.onChoiceSelected, this, 1, 0, 2, 0);
+        	newChoiceBox.anchor.setTo(0.5);
+        	newChoiceBox.choiceID = i;
+        	newChoiceBox.visible = false;
+        	var newChoiceText = this['choicetext' + i] = this.add.text(this.CHOICES_XOFFSET, this.CHOICES_YOFFSET + (this.CHOICES_YGAP * i), "TEST " + i, this.CHOICETEXT_OPTIONS);
+			newChoiceText.anchor.setTo(0.5);
+        	newChoiceText.visible = false;
+        }
+
         this.advancearrow = this.add.sprite(this.ADVANCEARROW_XOFFSET, this.ADVANCEARROW_YOFFSET, 'advancearrow');
         this.add.tween(this.advancearrow)
         	.to({y: this.ADVANCEARROW_YOFFSET + this.ADVANCEARROW_YBOUNCE}, this.ADVANCEARROW_BOUNCEDURATION, null, true, 0, Number.MAX_VALUE, true);
@@ -81,8 +106,13 @@ var KWA = window.KWA = window.KWA || {};
         this.add.tween(this.fastforwardarrow)
         	.to({x: this.FASTFORWARDARROW_XOFFSET + this.FASTFORWARDARROW_XBOUNCE}, this.FASTFORWARDARROW_BOUNCEDURATION, null, true, 0, Number.MAX_VALUE, true);
 
-        this.input.onDown.add(this.onDown, this);
-        this.input.onUp.add(this.onUp, this);
+        this.questionmark = this.add.sprite(this.QUESTIONMARK_XOFFSET, this.QUESTIONMARK_YOFFSET, 'questionmark');
+        this.questionmark.anchor.setTo(0.5);
+        this.add.tween(this.questionmark)
+        	.to({angle: 360}, this.QUESTIONMARK_SPINDURATION, Phaser.Easing.Back.InOut, true, 0, Number.MAX_VALUE, false);
+
+        // this.input.onDown.add(this.onDown, this);
+        // this.input.onUp.add(this.onUp, this);
 
 		//use special logic on key events to make it more "gamey" and less "text-editory"
         this.keysDown = {}; 
@@ -107,7 +137,7 @@ var KWA = window.KWA = window.KWA || {};
 	},
 
 	processLine: function(line) {
-		return _.extend({
+		var ret = _.extend({
 			label: null,
 			name: '',
 			dialogue: '',
@@ -119,6 +149,8 @@ var KWA = window.KWA = window.KWA || {};
 			options: null,
 			advance: 1
 		}, line);
+		ret.hasChoice = _.isArray(ret.advance);
+		return ret;
 	},
 
 	advanceToLine: function(lineIndex) {
@@ -225,7 +257,11 @@ var KWA = window.KWA = window.KWA || {};
 		case this.INPUT_MODE.ADVANCING:
 			this.currentText = this.dialogueSegments[this.currentDialogueSegmentIndex];
 			this.dialogue.text = this.currentText;
-			this.mode = this.INPUT_MODE.WAITING;
+			if (this.currentLine.hasChoice && this.currentDialogueSegmentIndex == this.dialogueSegments.length - 1) {
+				this.showChoices(this.currentLine);
+			} else {
+				this.mode = this.INPUT_MODE.WAITING;					
+			}
 			break;
 		case this.INPUT_MODE.WAITING:
 			if (this.currentDialogueSegmentIndex == this.dialogueSegments.length - 1) {
@@ -238,7 +274,43 @@ var KWA = window.KWA = window.KWA || {};
 		}
 	},
 
+	showChoices: function(line) {
+		if (line.hasChoice) {
+			this.currentChoices = line.advance;
+			for (var i = 0; i < this.MAX_CHOICES; i++) {
+				var choicebox = this['choicebox' + i];
+				var choicetext = this['choicetext' + i];
+				if (i < this.currentChoices.length) {
+					choicebox.visible = true;
+					choicetext.text = line.advance[i].choice;
+					choicetext.visible = true;
+				}
+			}
+			this.mode = this.INPUT_MODE.CHOICE;
+		}
+	},
+
+	onChoiceSelected: function(choicebox) {
+		if (this.mode == this.INPUT_MODE.CHOICE) {
+			var choice = this.currentChoices[choicebox.choiceID];
+			
+			this.currentChoices = null;
+			for (var i = 0; i < this.MAX_CHOICES; i++) {
+				this['choicebox' + i].visible = false;
+				this['choicetext' + i].visible = false;
+			}
+
+			this.currentLine.advance = choice.advance;
+			this.mode = this.INPUT_MODE.WAITING;
+			this.advanceText();
+		}
+	},
+
 	fastForward: function(toggle) {
+		if (this.mode == this.INPUT_MODE.CHOICE) {
+			return;
+		}
+		
 		if (toggle) {
 			this.advanceText(); // always advance at least once the instant fastforward is pressed
 			this.mode = this.INPUT_MODE.FASTFORWARD;
@@ -269,6 +341,10 @@ var KWA = window.KWA = window.KWA || {};
 	},
 
 	update: function() {
+		this.advancearrow.visible = false;
+		this.fastforwardarrow.visible = false;
+		this.questionmark.visible = false;
+
 		switch (this.mode) {
 		case this.INPUT_MODE.ADVANCING:
 			this.currentTextTimer += this.time.elapsed;
@@ -278,18 +354,21 @@ var KWA = window.KWA = window.KWA || {};
 				if (newCharIndex < currentDialogueSegment.length) {
 					this.currentText += currentDialogueSegment.charAt(newCharIndex);
 				} else {
-					this.mode = this.INPUT_MODE.WAITING;					
+					if (this.currentLine.hasChoice && this.currentDialogueSegmentIndex == this.dialogueSegments.length - 1) {
+						this.showChoices(this.currentLine);
+					} else {
+						this.mode = this.INPUT_MODE.WAITING;					
+					}
 				}
 				this.currentTextTimer = 0;
 				this.dialogue.text = this.currentText;
 			}
-
-			this.advancearrow.visible = false;
-			this.fastforwardarrow.visible = false;
 			break;
 		case this.INPUT_MODE.WAITING:
 			this.advancearrow.visible = true;
-			this.fastforwardarrow.visible = false;
+			break;
+		case this.INPUT_MODE.CHOICE:
+			this.questionmark.visible = true;
 			break;
 		case this.INPUT_MODE.FASTFORWARD:
 			this.currentFastForwardTimer += this.time.elapsed;
@@ -298,12 +377,13 @@ var KWA = window.KWA = window.KWA || {};
 				if (this.currentDialogueSegmentIndex >= this.dialogueSegments.length) {
 					this.advanceToLine(this.getNextLineIndex(this.currentLine));
 				}
+				if (this.currentLine.hasChoice && this.currentDialogueSegmentIndex == this.dialogueSegments.length - 1) {
+					this.showChoices(this.currentLine);
+				}
 				this.currentText = this.dialogueSegments[this.currentDialogueSegmentIndex];
 				this.dialogue.text = this.currentText;
 				this.currentFastForwardTimer = 0;
 			}
-
-			this.advancearrow.visible = false;
 			this.fastforwardarrow.visible = true;
 			break;
 		}

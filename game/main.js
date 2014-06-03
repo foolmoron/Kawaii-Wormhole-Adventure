@@ -7,6 +7,7 @@ KWA.IMAGES = [
     'namebox.png',
     'advancearrow.png',
     'fastforwardarrow.png',
+    'questionmark.png',
     'blank.png',
     'background1.png',
     'background2.png',
@@ -18,6 +19,9 @@ KWA.IMAGES = [
     'jay1.png',
     'jay2.png',
     'jay3.png'
+];
+KWA.SHEETS = [
+    ['choicebox.png', 600, 40, 3]
 ];
 
 window.onload = function() {
@@ -33,6 +37,10 @@ window.onload = function() {
         KWA.IMAGES.forEach(function(filename) {
             var index = filename.split(".")[0].replace(/(\/|\\)/g, ''); // collapse whole path into a no-slash string
             this.load.image(index, KWA.IMAGE_DIR + filename);
+        }, this);
+        KWA.SHEETS.forEach(function(sheet) {
+            var index = sheet[0].split(".")[0].replace(/(\/|\\)/g, '');
+            this.load.spritesheet(index, KWA.IMAGE_DIR + sheet[0], sheet[1], sheet[2], sheet[3]);
         }, this);
     };
 
