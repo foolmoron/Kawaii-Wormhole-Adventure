@@ -374,11 +374,12 @@ var KWA = window.KWA = window.KWA || {};
 			this.currentFastForwardTimer += this.time.elapsed;
 			if (this.currentFastForwardTimer >= this.FASTFORWARD_INTERVAL) {
 				this.currentDialogueSegmentIndex++;
-				if (this.currentDialogueSegmentIndex >= this.dialogueSegments.length) {
-					this.advanceToLine(this.getNextLineIndex(this.currentLine));
-				}
-				if (this.currentLine.hasChoice && this.currentDialogueSegmentIndex == this.dialogueSegments.length - 1) {
+				if (this.currentLine.hasChoice && this.currentDialogueSegmentIndex == this.dialogueSegments.length) {
+					this.dialogue.text = this.dialogueSegments[this.currentDialogueSegmentIndex - 1];
 					this.showChoices(this.currentLine);
+					return;
+				} else if (this.currentDialogueSegmentIndex == this.dialogueSegments.length) {
+					this.advanceToLine(this.getNextLineIndex(this.currentLine));
 				}
 				this.currentText = this.dialogueSegments[this.currentDialogueSegmentIndex];
 				this.dialogue.text = this.currentText;
