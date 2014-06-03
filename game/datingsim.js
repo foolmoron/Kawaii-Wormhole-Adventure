@@ -6,7 +6,7 @@ var KWA = window.KWA = window.KWA || {};
 
 	NAMEBOX_YOFFSET: 410,
 	NAME_XOFFSET: 125,
-	NAME_YOFFSET: 427,
+	NAME_YOFFSET: 428,
 	NAME_OPTIONS: {
 		font: '32px Droid Sans Mono',
 		fill: '#fff',
