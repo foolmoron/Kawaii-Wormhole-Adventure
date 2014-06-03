@@ -111,8 +111,8 @@ var KWA = window.KWA = window.KWA || {};
         this.add.tween(this.questionmark)
         	.to({angle: 360}, this.QUESTIONMARK_SPINDURATION, Phaser.Easing.Back.InOut, true, 0, Number.MAX_VALUE, false);
 
-        // this.input.onDown.add(this.onDown, this);
-        // this.input.onUp.add(this.onUp, this);
+        this.input.onDown.add(this.onDown, this);
+        this.input.onUp.add(this.onUp, this);
 
 		//use special logic on key events to make it more "gamey" and less "text-editory"
         this.keysDown = {}; 
