@@ -45,7 +45,7 @@ var KWA = window.KWA = window.KWA || {};
 	currentText: "",
 	currentTextTimer: 0,
 
-	FASTFORWARD_INTERVAL: 1000/10, // millis per dialogue segment
+	FASTFORWARD_INTERVAL: 1000/12, // millis per dialogue segment
 	currentFastForwardTimer: 0,
 
 	DIALOGUE_LINE_CHARACTER_LIMIT: 41,
@@ -310,7 +310,7 @@ var KWA = window.KWA = window.KWA || {};
 		if (this.mode == this.INPUT_MODE.CHOICE) {
 			return;
 		}
-		
+
 		if (toggle) {
 			this.advanceText(); // always advance at least once the instant fastforward is pressed
 			this.mode = this.INPUT_MODE.FASTFORWARD;
