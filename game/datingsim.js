@@ -375,9 +375,8 @@ var KWA = window.KWA = window.KWA || {};
 			if (this.currentFastForwardTimer >= this.FASTFORWARD_INTERVAL) {
 				this.currentDialogueSegmentIndex++;
 				if (this.currentLine.hasChoice && this.currentDialogueSegmentIndex == this.dialogueSegments.length) {
-					this.dialogue.text = this.dialogueSegments[this.currentDialogueSegmentIndex - 1];
+					this.currentDialogueSegmentIndex--;
 					this.showChoices(this.currentLine);
-					return;
 				} else if (this.currentDialogueSegmentIndex == this.dialogueSegments.length) {
 					this.advanceToLine(this.getNextLineIndex(this.currentLine));
 				}
