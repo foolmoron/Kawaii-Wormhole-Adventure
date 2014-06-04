@@ -16,7 +16,7 @@ _.extend(KWA.fn, {
 
 		var fade = this.add.graphics(0, 0);
         fade.beginFill(options.color, 1);
-        fade.drawRect(0, 0, this.game.width, this.game.height);
+        fade.drawRect(-this.game.width / 2, -this.game.height / 2, this.game.width * 2, this.game.height * 2);
         fade.alpha = (options.fadeOut) ? 0 : 1;
         fade.endFill();
 
