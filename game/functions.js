@@ -52,7 +52,6 @@ _.extend(KWA.fn, {
         	.to({magnitude: 0}, options.duration, null, true)
         	.onUpdateCallback(function(tween, value) {
         		var magnitude = (1 - value) * options.magnitude; // 'value' is just raw interp value, so we have to manually calculate magnitude
-				console.log(magnitude);
 				var randX = this.rnd.integerInRange(-magnitude, magnitude);
 				var randY = this.rnd.integerInRange(-magnitude, magnitude);
     			this.world.setBounds(randX, randY, this.game.width + randX, this.game.height + randY);
