@@ -159,6 +159,8 @@ var KWA = window.KWA = window.KWA || {};
 			return;
 		}
 
+		KWA.fn.cleanupEffects();
+
 		this.currentLineIndex = lineIndex;
 		this.currentLine = this.processLine(this.script[lineIndex]);
 
