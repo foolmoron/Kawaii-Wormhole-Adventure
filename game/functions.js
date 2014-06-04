@@ -56,5 +56,87 @@ _.extend(KWA.fn, {
 				var randY = this.rnd.integerInRange(-magnitude, magnitude);
     			this.world.setBounds(randX, randY, this.game.width + randX, this.game.height + randY);
         	}, this);
+	},
+
+	characterSlide: function(options) {
+		options = _.extend({
+			characterRight: true,
+			slideIn: true,
+			duration: 1000,
+			onComplete: function() {}
+		}, options);
+
+		var character = (options.characterRight) ? this.characterRight : this.characterLeft;
+		var originalX = character.x;
+		var outsideScreenX = (options.characterRight) ? 1000: -200; // 200 units off screen
+		character.x = (options.slideIn) ? outsideScreenX : originalX;
+        this.add.tween(character)
+        	.to({x: (options.slideIn) ? originalX : outsideScreenX}, options.duration)
+        	.start()
+        	.onComplete.add(options.onComplete, this);
+	},
+
+	characterRightSlideIn: function(options) {
+		options.characterRight = true;
+		options.slideIn = true;
+		KWA.fn.call(this, 'characterSlide', options);
+	},
+
+	characterRightSlideOut: function(options) {
+		options.characterRight = true;
+		options.slideIn = false;
+		KWA.fn.call(this, 'characterSlide', options);
+	},
+
+	characterLeftSlideIn: function(options) {
+		options.characterRight = false;
+		options.slideIn = true;
+		KWA.fn.call(this, 'characterSlide', options);
+	},
+
+	characterLeftSlideOut: function(options) {
+		options.characterRight = false;
+		options.slideIn = false;
+		KWA.fn.call(this, 'characterSlide', options);
+	},
+
+	characterFade: function(options) {
+		options = _.extend({
+			characterRight: true,
+			fadeOut: false,
+			duration: 1000,
+			onComplete: function() {}
+		}, options);
+
+		var character = (options.characterRight) ? this.characterRight : this.characterLeft;
+		character.alpha = (options.fadeOut) ? 1 : 0;
+        this.add.tween(character)
+        	.to({alpha: (options.fadeOut) ? 0 : 1}, options.duration)
+        	.start()
+        	.onComplete.add(options.onComplete, this);
+	},
+
+	characterRightFadeIn: function(options) {
+		options.characterRight = true;
+		options.fadeOut = false;
+		KWA.fn.call(this, 'characterFade', options);
+	},
+
+	characterRightFadeOut: function(options) {
+		options.characterRight = true;
+		options.fadeOut = true;
+		KWA.fn.call(this, 'characterFade', options);
+	},
+
+	characterLeftFadeIn: function(options) {
+		options.characterRight = false;
+		options.fadeOut = false;
+		KWA.fn.call(this, 'characterFade', options);
+	},
+
+	characterLeftFadeOut: function(options) {
+		options.characterRight = false;
+		options.fadeOut = true;
+		KWA.fn.call(this, 'characterFade', options);
 	}
 });

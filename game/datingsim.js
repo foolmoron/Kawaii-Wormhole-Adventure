@@ -176,6 +176,8 @@ var KWA = window.KWA = window.KWA || {};
 		}
 		this.characterLeft.loadTexture(this.currentLine.characterLeft);
 		this.characterRight.loadTexture(this.currentLine.characterRight);
+		this.characterLeft.alpha = 1;
+		this.characterRight.alpha = 1;
 
 		if (this.currentLine.cancelFastForward) {
 			this.mode = this.INPUT_MODE.ADVANCING;
