@@ -18,6 +18,7 @@ _.extend(KWA.fn, {
 			fadeOut: false,
 			color: 'black',
 			duration: 1000,
+			easing: Phaser.Easing.Linear.None,
 			onComplete: function() {}
 		}, options);
 
@@ -28,8 +29,7 @@ _.extend(KWA.fn, {
 		fade.endFill();
 
 		var tween = this.add.tween(fade)
-			.to({alpha: (options.fadeOut) ? 1 : 0}, options.duration)
-			.start();
+			.to({alpha: (options.fadeOut) ? 1 : 0}, options.duration, options.easing, true);
 		tween.onComplete.add(options.onComplete, this);
 
 		KWA.fn._cleanupFunctions.push(function() {
@@ -52,12 +52,13 @@ _.extend(KWA.fn, {
 		options = _.extend({
 			magnitude: 30,
 			duration: 1000,
+			easing: Phaser.Easing.Exponential.In,
 			onComplete: function() {}
 		}, options);
 
 		var magnitudeObj = { magnitude: options.magnitude };
 		var tween = this.add.tween(magnitudeObj)
-			.to({magnitude: 0}, options.duration, null, true)
+			.to({magnitude: 0}, options.duration, options.easing, true)
 			.onUpdateCallback(function(tween, value) {
 				var magnitude = (1 - value) * options.magnitude; // 'value' is just raw interp value, so we have to manually calculate magnitude
 				var randX = this.rnd.integerInRange(-magnitude, magnitude);
@@ -77,16 +78,16 @@ _.extend(KWA.fn, {
 			characterRight: true,
 			slideIn: true,
 			duration: 1000,
+			easing: Phaser.Easing.Quartic.Out,
 			onComplete: function() {}
 		}, options);
 
 		var character = (options.characterRight) ? this.characterRight : this.characterLeft;
 		var originalX = character.x;
-		var outsideScreenX = (options.characterRight) ? 1000: -200; // 200 units off screen
+		var outsideScreenX = (options.characterRight) ? 925: -125; // 125 units off screen, matters greatly for easing
 		character.x = (options.slideIn) ? outsideScreenX : originalX;
 		var tween = this.add.tween(character)
-			.to({x: (options.slideIn) ? originalX : outsideScreenX}, options.duration)
-			.start();
+			.to({x: (options.slideIn) ? originalX : outsideScreenX}, options.duration, options.easing, true);
 		tween.onComplete.add(options.onComplete, this);
 
 		KWA.fn._cleanupFunctions.push(function() {
@@ -124,14 +125,14 @@ _.extend(KWA.fn, {
 			characterRight: true,
 			fadeOut: false,
 			duration: 1000,
+			easing: Phaser.Easing.Exponential.Out,
 			onComplete: function() {}
 		}, options);
 
 		var character = (options.characterRight) ? this.characterRight : this.characterLeft;
 		character.alpha = (options.fadeOut) ? 1 : 0;
 		var tween = this.add.tween(character)
-			.to({alpha: (options.fadeOut) ? 0 : 1}, options.duration)
-			.start();
+			.to({alpha: (options.fadeOut) ? 0 : 1}, options.duration, options.easing, true);
 		tween.onComplete.add(options.onComplete, this);
 
 		KWA.fn._cleanupFunctions.push(function() {
@@ -169,13 +170,14 @@ _.extend(KWA.fn, {
 			characterRight: true,
 			magnitude: 20,
 			duration: 1000,
+			easing: Phaser.Easing.Exponential.In,
 			onComplete: function() {}
 		}, options);
 
 		var character = (options.characterRight) ? this.characterRight : this.characterLeft;
 		var magnitudeObj = { magnitude: options.magnitude };
 		var tween = this.add.tween(magnitudeObj)
-			.to({magnitude: 0}, options.duration, null, true)
+			.to({magnitude: 0}, options.duration, options.easing, true)
 			.onUpdateCallback(function(tween, value) {
 				var magnitude = (1 - value) * options.magnitude;
 				var randX = this.rnd.integerInRange(-magnitude, magnitude);
