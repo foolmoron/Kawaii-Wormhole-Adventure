@@ -32,6 +32,10 @@ KWA.SCRIPT = [
 	{name: 'six', dialogue: "hey test6 hey test6 hey test6 hey test6 hey test6 hey test6 hey test6", background: 'background3', characterLeft: 'may1', advance: 1},
 	{name: 'seven', dialogue: "hey test7 hey test7 hey test7 hey test7 hey test7 hey test7 hey test7", background: 'background2', characterLeft: 'jay1', characterRight: 'may2', advance: 1},
 	{label: 'eight', name: 'eight', dialogue: "hey test8 hey test8 hey test8 hey test8 hey test8 hey test8 hey test8", background: 'background1', characterRight: 'may3', advance: 1},
+	{name: 'nine', dialogue: "hey test9 hey test9 hey test9 hey test9 hey test9 hey test9 hey test9", background: 'background2', characterLeft: 'jay3', characterRight: 'may3', func: 'characterRightShake', advance: 1},
+	{name: 'ten', dialogue: "hey test10 hey test10 hey test10 hey test10 hey test10 hey test10 hey test10", background: 'background2', characterLeft: 'jay3', characterRight: 'may3', func: 'characterLeftShake', advance: 1},
+	{name: 'Oh Snap!', dialogue: "Sliding in while fading in AND shaking?!?!?!?! I don't believe it!", background: 'background2', characterLeft: 'jay3', characterRight: 'may3', func: ['characterLeftSlideIn', 'characterLeftFadeIn', 'characterLeftShake', 'characterRightSlideIn', 'characterRightFadeIn', 'characterRightShake'], advance: 1},
+	{name: 'Oh Snap!', dialogue: "Now they're sliding out while fading out and shaking?!?!?! I can't handle this amazingness!!!", background: 'background2', characterLeft: 'jay3', characterRight: 'may3', func: ['characterLeftSlideOut', 'characterLeftFadeOut', 'characterLeftShake', 'characterRightSlideOut', 'characterRightFadeOut', 'characterRightShake'], advance: 1},
 	{label: 'restart', characterLeft: 'may3', cancelFastForward: true, func: ['fadeOut', 'screenShake'], options: { onComplete: function() { this.state.restart(true, false, KWA.SCRIPT); } }, advance: null}
 ];
 

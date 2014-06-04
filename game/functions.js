@@ -162,5 +162,47 @@ _.extend(KWA.fn, {
 		options.characterRight = false;
 		options.fadeOut = true;
 		KWA.fn.call(this, 'characterFade', options);
+	},
+
+	characterShake: function(options) {
+		options = _.extend({
+			characterRight: true,
+			magnitude: 20,
+			duration: 1000,
+			onComplete: function() {}
+		}, options);
+
+		var character = (options.characterRight) ? this.characterRight : this.characterLeft;
+		var magnitudeObj = { magnitude: options.magnitude };
+		var tween = this.add.tween(magnitudeObj)
+			.to({magnitude: 0}, options.duration, null, true)
+			.onUpdateCallback(function(tween, value) {
+				var magnitude = (1 - value) * options.magnitude;
+				var randX = this.rnd.integerInRange(-magnitude, magnitude);
+				var randY = this.rnd.integerInRange(-magnitude, magnitude);
+				tween.prevRandX = tween.prevRandX || 0; // initialize previous shake values
+				tween.prevRandY = tween.prevRandY || 0;
+				character.x += (randX - tween.prevRandX); // undo previous shake, then add new shake
+				character.y += (randY - tween.prevRandY);
+				tween.prevRandX = randX;
+				tween.prevRandY = randY;
+			}, this);
+
+		var self = this;
+		KWA.fn._cleanupFunctions.push(function() {
+			tween.stop();
+			character.x -= tween.prevRandX || 0;
+			character.y -= tween.prevRandY || 0;
+		});
+	},
+
+	characterRightShake: function(options) {
+		options.characterRight = true;
+		KWA.fn.call(this, 'characterShake', options);
+	},
+
+	characterLeftShake: function(options) {
+		options.characterRight = false;
+		KWA.fn.call(this, 'characterShake', options);
 	}
 });
