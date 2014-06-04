@@ -179,12 +179,16 @@ var KWA = window.KWA = window.KWA || {};
 		this.currentFastForwardTimer = 0;
 
 		if (this.mode != this.INPUT_MODE.FASTFORWARD) {
-			var func = this.currentLine.func;
-			if (func) {
-				if (_.isFunction(func)) {
-					func.call(this, this.currentLine.options);
-				} else if (typeof func == 'string') {
-					KWA.fn.call(this, func, this.currentLine.options);
+			if (this.currentLine.func) {
+				var funcList = [].concat(this.currentLine.func); // box func into an array if it's not already an array
+				var options = [].concat(this.currentLine.options); // same with options
+				for (var i = 0; i < funcList.length; i++) {
+					var func = funcList[i];
+					if (_.isFunction(func)) {
+						func.call(this, options[i]);
+					} else if (typeof func == 'string') {
+						KWA.fn.call(this, func, options[i]);
+					}
 				}
 			}
 		}

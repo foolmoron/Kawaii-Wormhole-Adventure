@@ -1,6 +1,6 @@
 var KWA = window.KWA = window.KWA || {};
 
-/*
+/* * * DATING SIM SCRIPTING SYSTEM * * *\
 * The script is made up of lines.  Each line has the following properties:
 * label - STR - a keyword which allows other lines to jump to this line - default: null
 * name - STR - the name of the speaker of this dialogue - default: ''
@@ -12,7 +12,8 @@ var KWA = window.KWA = window.KWA || {};
 * func - the function that will be called when starting this line - default: null
 *			STR - calls the global function with this name in KWA.fn with the Phaser state as context
 *			FUNC - calls this functions directly with the Phaser state as context
-* options - OBJ - options object passed to the above function - default: null
+*			ARR - array of strings or functions that are called right after each other
+* options - OBJ/ARR - options object passed to the above function (or functions, if array) - default: null
 * advance - property that determines what the next line will be (can be several types) - default: 1
 *			INT - jumps this many lines forward in the script
 *			STR - jumps to the line with this label
@@ -20,7 +21,7 @@ var KWA = window.KWA = window.KWA || {};
 *			ARR - array of choice objects, which each MUST define the following properties:
 *				choice - STR - text to display in the choice box
 *				advance - INT/STR - determines the next line, if this choice is selected, using the same rules as the main advance property
-*/
+\* * * * * * * * * * * * * * * * * * * */
 KWA.SCRIPT = [
 	{name: 'one', dialogue: "0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9", background: 'background3', advance: 2},
 	{label: 'two', name: 'two', dialogue: "hey test2 hey test2 hey test2 hey test2 hey test2 hey test2 hey test2hey test2 hey test2 hey test2 hey test2 hey test2 hey test2 hey test2hey test2 hey test2 hey test2 hey test2 hey test2 hey test2 hey test2", background: 'background2', characterRight: 'may1', advance: 3},
