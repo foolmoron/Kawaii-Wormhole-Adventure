@@ -70,70 +70,70 @@ var KWA = window.KWA = window.KWA || {};
 	},
 
 	create: function() {
-        this.stage.setBackgroundColor('#B4DDE9');
+		this.stage.setBackgroundColor('#B4DDE9');
 
-        //objects are drawn in create-order so do background stuff first
-        this.background = this.add.sprite(this.world.centerX, this.world.centerY, 'blank');
-        this.background.anchor.setTo(0.5);      
+		//objects are drawn in create-order so do background stuff first
+		this.background = this.add.sprite(this.world.centerX, this.world.centerY, 'blank');
+		this.background.anchor.setTo(0.5);      
 
-        this.characterLeft = this.add.sprite(this.CHARACTERLEFT_XOFFSET, this.world.height, 'blank');
-        this.characterLeft.anchor.setTo(0.5, 1);    
-        this.characterRight = this.add.sprite(this.CHARACTERRIGHT_XOFFSET, this.world.height, 'blank');
-        this.characterRight.anchor.setTo(0.5, 1);      
+		this.characterLeft = this.add.sprite(this.CHARACTERLEFT_XOFFSET, this.world.height, 'blank');
+		this.characterLeft.anchor.setTo(0.5, 1);    
+		this.characterRight = this.add.sprite(this.CHARACTERRIGHT_XOFFSET, this.world.height, 'blank');
+		this.characterRight.anchor.setTo(0.5, 1);      
 
-        this.namebox = this.add.sprite(0, this.NAMEBOX_YOFFSET, 'namebox');	
-        this.name = this.add.text(this.NAME_XOFFSET, this.NAME_YOFFSET, "", this.NAME_OPTIONS);
-        this.name.anchor.setTo(0.5);
+		this.namebox = this.add.sprite(0, this.NAMEBOX_YOFFSET, 'namebox');	
+		this.name = this.add.text(this.NAME_XOFFSET, this.NAME_YOFFSET, "", this.NAME_OPTIONS);
+		this.name.anchor.setTo(0.5);
 
-        this.dialoguebox = this.add.sprite(0, this.DIALOGUEBOX_YOFFSET, 'dialoguebox');
-        this.dialogue = this.add.text(this.DIALOGUE_XOFFSET, this.DIALOGUE_YOFFSET, "", this.DIALOGUE_OPTIONS);
+		this.dialoguebox = this.add.sprite(0, this.DIALOGUEBOX_YOFFSET, 'dialoguebox');
+		this.dialogue = this.add.text(this.DIALOGUE_XOFFSET, this.DIALOGUE_YOFFSET, "", this.DIALOGUE_OPTIONS);
 
-        for (var i = 0; i < this.MAX_CHOICES; i++) {
-        	var newChoiceBox = this['choicebox' + i] = this.add.button(this.CHOICES_XOFFSET, this.CHOICES_YOFFSET + (this.CHOICES_YGAP * i), this.CHOICES_SHEET, this.onChoiceSelected, this, 1, 0, 2, 0);
-        	newChoiceBox.anchor.setTo(0.5);
-        	newChoiceBox.choiceID = i;
-        	newChoiceBox.visible = false;
-        	var newChoiceText = this['choicetext' + i] = this.add.text(this.CHOICES_XOFFSET, this.CHOICES_YOFFSET + (this.CHOICES_YGAP * i), "TEST " + i, this.CHOICETEXT_OPTIONS);
+		for (var i = 0; i < this.MAX_CHOICES; i++) {
+			var newChoiceBox = this['choicebox' + i] = this.add.button(this.CHOICES_XOFFSET, this.CHOICES_YOFFSET + (this.CHOICES_YGAP * i), this.CHOICES_SHEET, this.onChoiceSelected, this, 1, 0, 2, 0);
+			newChoiceBox.anchor.setTo(0.5);
+			newChoiceBox.choiceID = i;
+			newChoiceBox.visible = false;
+			var newChoiceText = this['choicetext' + i] = this.add.text(this.CHOICES_XOFFSET, this.CHOICES_YOFFSET + (this.CHOICES_YGAP * i), "TEST " + i, this.CHOICETEXT_OPTIONS);
 			newChoiceText.anchor.setTo(0.5);
-        	newChoiceText.visible = false;
-        }
+			newChoiceText.visible = false;
+		}
 
-        this.advancearrow = this.add.sprite(this.ADVANCEARROW_XOFFSET, this.ADVANCEARROW_YOFFSET, 'advancearrow');
-        this.add.tween(this.advancearrow)
-        	.to({y: this.ADVANCEARROW_YOFFSET + this.ADVANCEARROW_YBOUNCE}, this.ADVANCEARROW_BOUNCEDURATION, null, true, 0, Number.MAX_VALUE, true);
-        
-        this.fastforwardarrow = this.add.sprite(this.FASTFORWARDARROW_XOFFSET, this.FASTFORWARDARROW_YOFFSET, 'fastforwardarrow');
-        this.add.tween(this.fastforwardarrow)
-        	.to({x: this.FASTFORWARDARROW_XOFFSET + this.FASTFORWARDARROW_XBOUNCE}, this.FASTFORWARDARROW_BOUNCEDURATION, null, true, 0, Number.MAX_VALUE, true);
+		this.advancearrow = this.add.sprite(this.ADVANCEARROW_XOFFSET, this.ADVANCEARROW_YOFFSET, 'advancearrow');
+		this.add.tween(this.advancearrow)
+			.to({y: this.ADVANCEARROW_YOFFSET + this.ADVANCEARROW_YBOUNCE}, this.ADVANCEARROW_BOUNCEDURATION, null, true, 0, Number.MAX_VALUE, true);
+		
+		this.fastforwardarrow = this.add.sprite(this.FASTFORWARDARROW_XOFFSET, this.FASTFORWARDARROW_YOFFSET, 'fastforwardarrow');
+		this.add.tween(this.fastforwardarrow)
+			.to({x: this.FASTFORWARDARROW_XOFFSET + this.FASTFORWARDARROW_XBOUNCE}, this.FASTFORWARDARROW_BOUNCEDURATION, null, true, 0, Number.MAX_VALUE, true);
 
-        this.questionmark = this.add.sprite(this.QUESTIONMARK_XOFFSET, this.QUESTIONMARK_YOFFSET, 'questionmark');
-        this.questionmark.anchor.setTo(0.5);
-        this.add.tween(this.questionmark)
-        	.to({angle: 360}, this.QUESTIONMARK_SPINDURATION, Phaser.Easing.Back.InOut, true, 0, Number.MAX_VALUE, false);
+		this.questionmark = this.add.sprite(this.QUESTIONMARK_XOFFSET, this.QUESTIONMARK_YOFFSET, 'questionmark');
+		this.questionmark.anchor.setTo(0.5);
+		this.add.tween(this.questionmark)
+			.to({angle: 360}, this.QUESTIONMARK_SPINDURATION, Phaser.Easing.Back.InOut, true, 0, Number.MAX_VALUE, false);
 
-        this.input.onDown.add(this.onDown, this);
-        this.input.onUp.add(this.onUp, this);
+		this.input.onDown.add(this.onDown, this);
+		this.input.onUp.add(this.onUp, this);
 
 		//use special logic on key events to make it more "gamey" and less "text-editory"
-        this.keysDown = {}; 
-        this.input.keyboard.addCallbacks(this, function(keyEvent) {
+		this.keysDown = {}; 
+		this.input.keyboard.addCallbacks(this, function(keyEvent) {
 			var key = keyEvent.which || keyEvent.keyCode;
 			if (!this.keysDown[key]) { // keyDown can only be called once before the corresponding keyUp
 				this.keysDown[key] = true;
 				this.onKeyDown(key);
 			}
-        }, function(keyEvent) {
+		}, function(keyEvent) {
 			var key = keyEvent.which || keyEvent.keyCode;
 			if (this.keysDown[key]) { // keyUp can only be called after the corresponding keyDown
 				delete this.keysDown[key];
 				this.onKeyUp(key);
 			}
-        });
+		});
 
-        this.advanceToLine(0);
+		this.advanceToLine(0);
 		this.mode = this.INPUT_MODE.ADVANCING;
 
-        KWA.fn.call(this, 'fadeIn');
+		KWA.fn.call(this, 'fadeIn');
 	},
 
 	processLine: function(line) {
