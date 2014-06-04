@@ -21,6 +21,7 @@ var KWA = window.KWA = window.KWA || {};
 *			ARR - array of choice objects, which each MUST define the following properties:
 *				choice - STR - text to display in the choice box
 *				advance - INT/STR - determines the next line, if this choice is selected, using the same rules as the main advance property
+*			NULL - cannot advance at all from this line, so there better be a function that does something here
 \* * * * * * * * * * * * * * * * * * * */
 KWA.SCRIPT = [
 	{name: 'one', func: 'screenShake', dialogue: "0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9", background: 'background3', advance: 2},
@@ -31,7 +32,7 @@ KWA.SCRIPT = [
 	{name: 'six', dialogue: "hey test6 hey test6 hey test6 hey test6 hey test6 hey test6 hey test6", background: 'background3', characterLeft: 'may1', advance: 1},
 	{name: 'seven', dialogue: "hey test7 hey test7 hey test7 hey test7 hey test7 hey test7 hey test7", background: 'background2', characterLeft: 'jay1', characterRight: 'may2', advance: 1},
 	{label: 'eight', name: 'eight', dialogue: "hey test8 hey test8 hey test8 hey test8 hey test8 hey test8 hey test8", background: 'background1', characterRight: 'may3', advance: 1},
-	{label: 'restart', characterLeft: 'may3', cancelFastForward: true, func: ['screenShake', 'fadeOut'], options: { onComplete: function() { this.state.restart(true, false, KWA.SCRIPT); } }}
+	{label: 'restart', characterLeft: 'may3', cancelFastForward: true, func: ['fadeOut', 'screenShake'], options: { onComplete: function() { this.state.restart(true, false, KWA.SCRIPT); } }, advance: null}
 ];
 
 //lint the script lines to make sure there are no hard to find errors

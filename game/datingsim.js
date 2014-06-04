@@ -2,7 +2,7 @@ var KWA = window.KWA = window.KWA || {};
 
 (KWA.STATES = KWA.STATES || {})['datingsim'] = {
 
-	INPUT_MODE: {ADVANCING: 'advancing', WAITING: 'waiting', CHOICE: 'choice', FASTFORWARD: 'fastforward'},
+	INPUT_MODE: {ADVANCING: 'advancing', WAITING: 'waiting', STOPPED: 'stopped', CHOICE: 'choice', FASTFORWARD: 'fastforward'},
 
 	NAMEBOX_YOFFSET: 410,
 	NAME_XOFFSET: 125,
@@ -154,6 +154,11 @@ var KWA = window.KWA = window.KWA || {};
 	},
 
 	advanceToLine: function(lineIndex) {
+		if (lineIndex == null) {
+			this.mode = this.INPUT_MODE.STOPPED;
+			return;
+		}
+
 		this.currentLineIndex = lineIndex;
 		this.currentLine = this.processLine(this.script[lineIndex]);
 
@@ -242,7 +247,10 @@ var KWA = window.KWA = window.KWA || {};
 
 	getNextLineIndex: function(line) { 
 		var advance = line.advance;
-		if (_.isFunction(line.advance)) {
+		if (advance == null) {
+			return null; // can't advance from this line
+		}
+		if (_.isFunction(advance)) {
 			advance = line.advance.call(this, this.currentLineIndex, this.currentLine);
 		}
 		if (!isNaN(parseInt(advance, 10))) {
@@ -311,7 +319,7 @@ var KWA = window.KWA = window.KWA || {};
 	},
 
 	fastForward: function(toggle) {
-		if (this.mode == this.INPUT_MODE.CHOICE) {
+		if (this.mode == this.INPUT_MODE.CHOICE || this.mode == this.INPUT_MODE.STOPPED) {
 			return;
 		}
 
@@ -371,6 +379,9 @@ var KWA = window.KWA = window.KWA || {};
 		case this.INPUT_MODE.WAITING:
 			this.advancearrow.visible = true;
 			break;
+		case this.INPUT_MODE.STOPPED:
+			this.advancearrow.visible = true;
+			break;
 		case this.INPUT_MODE.CHOICE:
 			this.questionmark.visible = true;
 			break;
@@ -384,8 +395,10 @@ var KWA = window.KWA = window.KWA || {};
 				} else if (this.currentDialogueSegmentIndex == this.dialogueSegments.length) {
 					this.advanceToLine(this.getNextLineIndex(this.currentLine));
 				}
-				this.currentText = this.dialogueSegments[this.currentDialogueSegmentIndex];
-				this.dialogue.text = this.currentText;
+				if (this.mode == this.INPUT_MODE.FASTFORWARD) { // make sure we haven't switched into any alternate modes
+					this.currentText = this.dialogueSegments[this.currentDialogueSegmentIndex];
+					this.dialogue.text = this.currentText;
+				}
 				this.currentFastForwardTimer = 0;
 			}
 			this.fastforwardarrow.visible = true;
