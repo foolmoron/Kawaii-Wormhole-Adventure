@@ -384,7 +384,6 @@ var KWA = window.KWA = window.KWA || {};
 			this.advancearrow.visible = true;
 			break;
 		case this.INPUT_MODE.STOPPED:
-			this.advancearrow.visible = true;
 			break;
 		case this.INPUT_MODE.CHOICE:
 			this.questionmark.visible = true;
