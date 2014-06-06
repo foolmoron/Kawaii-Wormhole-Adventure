@@ -129,6 +129,7 @@ var KWA = window.KWA = window.KWA || {};
 				this.onKeyUp(key);
 			}
 		});
+		this.keyInputEnabled = true;
 
 		this.advanceToLine(0);
 		this.mode = this.INPUT_MODE.ADVANCING;
@@ -346,6 +347,10 @@ var KWA = window.KWA = window.KWA || {};
 
 	},
 	onKeyDown: function(key) {
+		if (!this.keyInputEnabled) {
+			return;
+		}
+
 		if (key == 39 || // right arrow
 			key == 40 || // down arrow
 			key == 32) { // spacebar
@@ -355,6 +360,10 @@ var KWA = window.KWA = window.KWA || {};
 		}
 	},
 	onKeyUp: function(key) {
+		if (!this.keyInputEnabled) {
+			return;
+		}
+
 		if (key == 16) { // shift
 			this.fastForward(false);
 		}
