@@ -18,9 +18,10 @@ var KWA = window.KWA = window.KWA || {};
 *			INT - jumps this many lines forward in the script
 *			STR - jumps to the line with this label
 *			FUNC - takes (lineIndex, lineObject) as parameters with the Phaser state as context and returns either an int or a string
-*			ARR - array of choice objects, which each MUST define the following properties:
-*				choice - STR - text to display in the choice box
-*				advance - INT/STR - determines the next line, if this choice is selected, using the same rules as the main advance property
+*			ARR - array of choice objects, which each defines the following properties:
+*				choice - STR - text to display in the choice box - REQUIRED
+*				advance - INT/STR - determines the next line, if this choice is selected, using the same rules as the main advance property - REQUIRED
+*				condition - FUNC - a function called with the Phaser state as context that returns a boolean that determines whether to show the options - OPTIONAL
 *			NULL - cannot advance at all from this line, so there better be a function that does something here
 \* * * * * * * * * * * * * * * * * * * */
 KWA.SCRIPT = [
@@ -41,7 +42,7 @@ KWA.SCRIPT = [
 
 //lint the script lines to make sure there are no hard to find errors
 (function(script) {
-	var SCRIPT_LINE_IN_CODE = 27;
+	var SCRIPT_LINE_IN_CODE = 28;
 	var VALID_PROP_NAMES = [
 		'label',
 		'name',
