@@ -11,6 +11,8 @@ _.extend(KWA.fn, {
 		for (var i = 0; i < this._cleanupFunctions.length; i++) {
 			this._cleanupFunctions[i]();
 		}
+		this._cleanupFunctions = [];
+	},
 	},
 
 	fade: function(options) {
