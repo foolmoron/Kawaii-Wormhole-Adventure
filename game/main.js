@@ -86,15 +86,15 @@ window.onload = function() {
 			return;
 		}
 
-		var text = this.add.text(this.world.centerX, this.world.height - 90, "Click or tap to start!", {font:"50px Droid Sans Mono", fill: "#000", align: "center"});
+		var text = this.add.text(this.world.centerX, this.world.height - 110, "Click or tap to start!", {font:"50px Droid Sans Mono", fill: "#000", align: "center"});
         text.anchor.setTo(0.5);
-        var star1 = this.add.sprite(38, this.world.height - 90, 'star');
+        var star1 = this.add.sprite(38, this.world.height - 110, 'star');
         star1.anchor.setTo(0.5);
         this.add.tween(star1)
             .to({angle: 180}, 1500, Phaser.Easing.Back.InOut, true, 0, Number.MAX_VALUE, true);
         this.add.tween(star1.scale)
             .to({x: 2, y: 2}, 600, Phaser.Easing.Linear.None, true, 0, Number.MAX_VALUE, true);
-        var star2 = this.add.sprite(762, this.world.height - 90, 'star');
+        var star2 = this.add.sprite(762, this.world.height - 110, 'star');
         star2.anchor.setTo(0.5);
         star2.angle = 180;
         this.add.tween(star2)
