@@ -57,7 +57,7 @@ _.extend(KWA.fn, {
         window.addEventListener('keypress', inputHandler, false);
 
         //mobile specific handling
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        if (!this.game.device.desktop) {
         	setTimeout(function() {
 	        	var name = null;
 	        	while (!name) {
