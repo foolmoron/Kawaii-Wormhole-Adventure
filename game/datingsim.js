@@ -48,6 +48,10 @@ var KWA = window.KWA = window.KWA || {};
 	FASTFORWARD_INTERVAL: 1000/12, // millis per dialogue segment
 	currentFastForwardTimer: 0,
 
+	FASTFORWARD_TAP_HOLD_TIME: 1000,
+	currentFastForwardTapHoldTime: 0,
+	fastForwardTapHolding: false,
+
 	DIALOGUE_LINE_CHARACTER_LIMIT: 41,
 	DIALOGUE_LINE_NUMBER_LIMIT: 3,
 	DIALOGUE_LAST_LINE_CUTOFF: 5,
@@ -346,9 +350,16 @@ var KWA = window.KWA = window.KWA || {};
 
 	onDown: function(pointer) {
 		this.advanceText();
+
+		this.currentFastForwardTapHoldTime = 0;
+		this.fastForwardTapHolding = true;
 	},
 	onUp: function(pointer) {
-
+		if (this.fastForwardTapHolding) {
+			this.fastForwardTapHolding = false;
+			this.currentFastForwardTapHoldTime = 0;
+			this.fastForward(false);
+		}
 	},
 	onKeyDown: function(key) {
 		if (!this.keyInputEnabled) {
@@ -374,6 +385,14 @@ var KWA = window.KWA = window.KWA || {};
 	},
 
 	update: function() {
+		if (this.fastForwardTapHolding && this.mode != this.INPUT_MODE.FASTFORWARD) {
+			this.currentFastForwardTapHoldTime += this.time.elapsed;
+			if (this.currentFastForwardTapHoldTime >= this.FASTFORWARD_TAP_HOLD_TIME) {
+				this.currentFastForwardTapHoldTime = 0;
+				this.fastForward(true);
+			}
+		}
+
 		this.advancearrow.visible = false;
 		this.fastforwardarrow.visible = false;
 		this.questionmark.visible = false;
