@@ -249,6 +249,7 @@ KWA.SCRIPT = [
 	{ name: "{mc}", dialogue: "If the Wormhole is my only way home, then I cannot risk it, no matter how much I want to be with you.", characterRight: 'jaysad'},
 	{ name: "Jay", dialogue: "I understand.", characterRight: 'jaysexy'},
 	{ name: "Jay", dialogue: "You’re not the first one to make that decision, and you won’t be the last...", characterRight: 'jaysad'},
+	{ name: "{mc}", dialogue: "(I wish I had the courage to help Jay, but...)", characterRight: 'jaysad'},
 	{ name: "{mc}", dialogue: "Jay, I’m sorry.", characterRight: 'jaysad'},
 	{ name: "Jay", dialogue: "I know. It’s time for you to go back home.", characterRight: 'jaynormal'},
 	{ name: "{mc}", dialogue: "(He’s making the Wormhole react without even touching it... )", characterRight: 'jaynormal'},
