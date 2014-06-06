@@ -41,7 +41,7 @@ KWA.SCRIPT = [
 
 //lint the script lines to make sure there are no hard to find errors
 (function(script) {
-	var SCRIPT_LINE_IN_CODE = 25;
+	var SCRIPT_LINE_IN_CODE = 27;
 	var VALID_PROP_NAMES = [
 		'label',
 		'name',
@@ -59,6 +59,7 @@ KWA.SCRIPT = [
 
 	var labelToLineMap = {};
 	var advanceToLabels = [];
+	var funcToLineMap = [];
 
 	for (var i = 0; i < script.length; i++) {
 		var lineErrorPrefix = "Line " + i + " (code line " + (SCRIPT_LINE_IN_CODE + i) + ")";
@@ -114,12 +115,33 @@ KWA.SCRIPT = [
 				}				
 			}
 		}
+
+		//get list of all func strings used
+		if (line.func) {
+			if (typeof line.func == 'string') {
+				funcToLineMap.push({func: line.func, line: i});
+			} else if (_.isArray(line.func)) {
+				for (var j = 0; j < line.func.length; j++) {
+					if (typeof line.func[j] == 'string') {
+						funcToLineMap.push({func: line.func[j], line: i});
+					}
+				}				
+			}
+		}
 	}
+	
 	//check for any jumps to non-existent labels
 	var allLabels = Object.keys(labelToLineMap);
 	for (var i = 0; i < advanceToLabels.length; i++) {
 		if (allLabels.indexOf(advanceToLabels[i].label) < 0) {
 			console.error("Line " + advanceToLabels[i].line + " (code line " + (SCRIPT_LINE_IN_CODE + advanceToLabels[i].line) + ")" + " jumps to non-existent label '" + advanceToLabels[i].label + "'!");
+		}
+	}
+
+	//check for calls to non-existent functions
+	for (var i = 0; i < funcToLineMap.length; i++) {
+		if (!(funcToLineMap[i].func in KWA.fn)) {
+			console.error("Line " + funcToLineMap[i].line + " (code line " + (SCRIPT_LINE_IN_CODE + funcToLineMap[i].line) + ")" + " calls non-existent function '" + funcToLineMap[i].func + "'!");
 		}
 	}
 })(KWA.SCRIPT);
