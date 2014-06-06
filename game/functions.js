@@ -14,6 +14,14 @@ _.extend(KWA.fn, {
 		this._cleanupFunctions = [];
 	},
 
+	acquireCourage: function() {
+		localStorage.setItem('courage', true);
+	},
+
+	acquireOptimism: function() {
+		localStorage.setItem('optimism', true);
+	},
+
 	getAndSaveInputString: function(options) {
 		options = _.extend({
 			variableContainer: KWA,
