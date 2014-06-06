@@ -101,8 +101,8 @@ _.extend(KWA.fn, {
 
 	screenShake: function(options) {
 		options = _.extend({
-			magnitude: 30,
-			duration: 1000,
+			magnitude: 20,
+			duration: 750,
 			easing: Phaser.Easing.Exponential.In,
 			onComplete: function() {}
 		}, options);
@@ -239,8 +239,8 @@ _.extend(KWA.fn, {
 	characterShake: function(options) {
 		options = _.extend({
 			characterRight: true,
-			magnitude: 12,
-			duration: 1000,
+			magnitude: 10,
+			duration: 750,
 			easing: Phaser.Easing.Exponential.In,
 			onComplete: function() {}
 		}, options);
