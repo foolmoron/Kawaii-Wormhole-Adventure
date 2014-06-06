@@ -116,6 +116,26 @@ _.extend(KWA.fn, {
 		});
 	},
 
+	flashBackground: function(options) {
+		options = _.extend({
+			background: 'blank',
+			duration: 400,
+			easing: Phaser.Easing.Linear.None
+		}, options);
+
+		var newBackground = this.add.sprite(this.world.centerX, this.world.centerY, options.background);
+		newBackground.anchor.setTo(0.5);
+		newBackground.alpha = 0;
+		var tween = this.add.tween(newBackground)
+			.to({alpha: 1}, options.duration, options.easing, true, 0, 1, true);
+
+		var self = this;
+		KWA.fn._cleanupFunctions.push(function() {
+			tween.stop();
+			newBackground.destroy();
+		});
+	},
+
 	characterSlide: function(options) {
 		options = _.extend({
 			characterRight: true,
