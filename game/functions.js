@@ -59,7 +59,7 @@ _.extend(KWA.fn, {
 	fade: function(options) {
 		options = _.extend({
 			fadeOut: false,
-			color: 'black',
+			color: 0x000000,
 			duration: 1000,
 			easing: Phaser.Easing.Linear.None,
 			onComplete: function() {}
