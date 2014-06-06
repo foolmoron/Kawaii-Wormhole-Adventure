@@ -10,6 +10,7 @@ KWA.IMAGES = [
 	'questionmark.png',
 	'blank.png',
 	'bgstarry.png',
+	'bgroom.png',
 	'bgmanor.png',
 	'bgmoon.png',
 	'maynormal.gif',
