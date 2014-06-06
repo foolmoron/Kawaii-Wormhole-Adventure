@@ -9,16 +9,19 @@ KWA.IMAGES = [
 	'fastforwardarrow.png',
 	'questionmark.png',
 	'blank.png',
-	'background1.png',
-	'background2.png',
-	'background3.png',
-	'background4.png',
-	'may1.png',
-	'may2.png',
-	'may3.png',
-	'jay1.png',
-	'jay2.png',
-	'jay3.png'
+	'bgstarry.png',
+	'bgmanor.png',
+	'bgmoon.png',
+	'maynormal.png',
+	'mayhappy.png',
+	'maysad.png',
+	'maysexy.png',
+	'mayangry.png',
+	'jaynormal.png',
+	'jayhappy.png',
+	'jaysad.png',
+	'jaysexy.png',
+	'jayangry.png'
 ];
 KWA.SHEETS = [
 	['choicebox.png', 600, 40, 3]
