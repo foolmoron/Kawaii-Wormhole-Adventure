@@ -26,7 +26,7 @@ _.extend(KWA.fn, {
 		options = _.extend({
 			variableContainer: KWA,
 			variableName: 'input',
-			maxLength: 10,
+			maxLength: 11,
 			textOptions: {
 				font: '32px Droid Sans Mono',
 				fill: '#fff',
@@ -40,7 +40,7 @@ _.extend(KWA.fn, {
 		this.mode = this.INPUT_MODE.STOPPED;
 		this.keyInputEnabled = false;
 
-		var inputText = this.add.text(this.world.centerX, this.world.centerY, "Type your name.", options.textOptions);
+		var inputText = this.add.text(this.world.centerX, this.world.centerY, "Type your name and press enter.", options.textOptions);
 		inputText.anchor.setTo(0.5);
 		var actualText = "";
 
