@@ -149,6 +149,8 @@ var KWA = window.KWA = window.KWA || {};
 			options: null,
 			advance: 1
 		}, line);
+		ret.name = ret.name.replace(/\{mc\}/gi, KWA.mc);
+		ret.dialogue = ret.dialogue.replace(/\{mc\}/gi, KWA.mc);
 		ret.hasChoice = _.isArray(ret.advance);
 		return ret;
 	},
