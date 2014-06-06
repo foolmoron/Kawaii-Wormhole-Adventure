@@ -303,7 +303,7 @@ var KWA = window.KWA = window.KWA || {};
 				var choicetext = this['choicetext' + i];
 				if (i < this.currentChoices.length) {
 					choicebox.visible = true;
-					choicetext.text = line.advance[i].choice;
+					choicetext.text = line.advance[i].choice.replace(/\{mc\}/gi, KWA.mc);
 					choicetext.visible = true;
 				}
 			}
