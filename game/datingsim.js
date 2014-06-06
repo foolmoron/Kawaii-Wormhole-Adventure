@@ -299,13 +299,13 @@ var KWA = window.KWA = window.KWA || {};
 		if (line.hasChoice) {
 			this.currentChoices = line.advance;
 			for (var i = 0; i < this.MAX_CHOICES; i++) {
-				if (typeof this.currentChoices[i].func == 'function' && !this.currentChoices[i].func()) {
-					continue;
-				}
 
 				var choicebox = this['choicebox' + i];
 				var choicetext = this['choicetext' + i];
 				if (i < this.currentChoices.length) {
+					if (typeof this.currentChoices[i].func == 'function' && !this.currentChoices[i].func()) {
+						continue;
+					}
 					choicebox.visible = true;
 					choicetext.text = this.currentChoices[i].choice.replace(/\{mc\}/gi, KWA.mc);
 					choicetext.visible = true;
