@@ -13,16 +13,16 @@ KWA.IMAGES = [
 	'bgroom.png',
 	'bgmanor.png',
 	'bgmoon.png',
-	'maynormal.gif',
-	'mayhappy.gif',
-	'maysad.gif',
-	'maysexy.gif',
-	'mayangry.gif',
-	'jaynormal.gif',
-	'jayhappy.gif',
-	'jaysad.gif',
-	'jaysexy.gif',
-	'jayangry.gif'
+	'maynormal.png',
+	'mayhappy.png',
+	'maysad.png',
+	'maysexy.png',
+	'mayangry.png',
+	'jaynormal.png',
+	'jayhappy.png',
+	'jaysad.png',
+	'jaysexy.png',
+	'jayangry.png'
 ];
 KWA.SHEETS = [
 	['choicebox.png', 600, 40, 3]
