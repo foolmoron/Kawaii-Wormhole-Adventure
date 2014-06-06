@@ -72,10 +72,14 @@ KWA.SCRIPT = [
 			}
 		}
 
-		//check for whitespace padding dialogue
 		if (line.dialogue) {
+			//check for whitespace padding dialogue
 			if (line.dialogue[0] == ' ' || line.dialogue[line.dialogue.length - 1] == ' ') {
-				console.error(lineErrorPrefix + " dialogue has extra whitespace padding it!");				
+				console.error(lineErrorPrefix + " dialogue has extra whitespace padding it!");
+			}
+			//check for double spaces
+			if (line.dialogue.search('  ') > 0) {
+				console.error(lineErrorPrefix + " dialogue has double space!");
 			}
 		}
 
