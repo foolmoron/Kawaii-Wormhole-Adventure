@@ -287,7 +287,9 @@ var KWA = window.KWA = window.KWA || {};
 			} else {
 				this.advanceSegment();
 			}
-			this.mode = this.INPUT_MODE.ADVANCING;
+			if (this.mode != this.INPUT_MODE.STOPPED) {
+				this.mode = this.INPUT_MODE.ADVANCING;
+			}
 			break;
 		}
 	},
