@@ -8,7 +8,7 @@ var KWA = window.KWA = window.KWA || {};
 	NAME_XOFFSET: 125,
 	NAME_YOFFSET: 428,
 	NAME_OPTIONS: {
-		font: '32px Droid Sans Mono',
+		font: '28px Droid Sans Mono',
 		fill: '#fff',
 		align: 'center'
 	},
