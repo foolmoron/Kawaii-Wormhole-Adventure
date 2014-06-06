@@ -71,6 +71,13 @@ KWA.SCRIPT = [
 			}
 		}
 
+		//check for whitespace padding dialogue
+		if (line.dialogue) {
+			if (line.dialogue[0] == ' ' || line.dialogue[line.dialogue.length - 1] == ' ') {
+				console.error(lineErrorPrefix + " dialogue has extra whitespace padding it!");				
+			}
+		}
+
 		//check for duplicate labels
 		if (line.label) {
 			if (labelToLineMap[line.label] != null) {
