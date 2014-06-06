@@ -56,6 +56,21 @@ _.extend(KWA.fn, {
 		};
         window.addEventListener('keypress', inputHandler, false);
 
+        //mobile specific handling
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        	setTimeout(function() {
+	        	var name = null;
+	        	while (!name) {
+	        		name = prompt("Type your name.");
+	        	}
+	        	name = name.substring(0, options.maxLength);
+				actualText = name;
+				inputText.text = actualText;
+				self.mode = self.INPUT_MODE.WAITING;
+				self.advanceText();
+        	}, 1000);
+        }
+
 		KWA.fn._cleanupFunctions.push(function() {
         	window.removeEventListener('keypress', inputHandler, false);
         	options.variableContainer[options.variableName] = actualText.trim();
