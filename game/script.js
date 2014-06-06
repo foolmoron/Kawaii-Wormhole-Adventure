@@ -26,7 +26,7 @@ var KWA = window.KWA = window.KWA || {};
 \* * * * * * * * * * * * * * * * * * * */
 KWA.SCRIPT = [
 	/* INTRO */ { name: "???", dialogue: "Welcome.", background: 'bgstarry'},
-	{ name: "???", dialogue: "WHO are you..?", func: 'getAndSaveInputString', options: { variableName: 'mc'}},
+	{ name: "???", dialogue: "Who are you..?", func: 'getAndSaveInputString', options: { variableName: 'mc'}},
 	{ name: "???", dialogue: "You are '{mc}'. Is this correct?", advance: [{choice: "Yes", advance: 1}, {choice: "No", advance: -1}] },
 	{ name: "???", dialogue: "Welcome, {mc}.", func: ['fadeOut', function() { this.mode = this.INPUT_MODE.STOPPED; }], options: {onComplete: function() { this.mode = this.INPUT_MODE.WAITING; this.advanceText(); }}},
 	{ label: 'intro', name: "???", dialogue: "You are awake.", background: 'bgstarry', func: 'fadeIn', options: {duration: 2000}},
