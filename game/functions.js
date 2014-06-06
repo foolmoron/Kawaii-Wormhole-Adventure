@@ -231,7 +231,7 @@ _.extend(KWA.fn, {
 	characterShake: function(options) {
 		options = _.extend({
 			characterRight: true,
-			magnitude: 20,
+			magnitude: 12,
 			duration: 1000,
 			easing: Phaser.Easing.Exponential.In,
 			onComplete: function() {}
