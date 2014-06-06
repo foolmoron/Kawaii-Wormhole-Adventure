@@ -303,7 +303,7 @@ var KWA = window.KWA = window.KWA || {};
 				var choicebox = this['choicebox' + i];
 				var choicetext = this['choicetext' + i];
 				if (i < this.currentChoices.length) {
-					if (typeof this.currentChoices[i].func == 'function' && !this.currentChoices[i].func()) {
+					if (typeof this.currentChoices[i].condition == 'function' && !this.currentChoices[i].condition()) {
 						continue;
 					}
 					choicebox.visible = true;
