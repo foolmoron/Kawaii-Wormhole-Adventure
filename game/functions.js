@@ -13,6 +13,47 @@ _.extend(KWA.fn, {
 		}
 		this._cleanupFunctions = [];
 	},
+
+	getAndSaveInputString: function(options) {
+		options = _.extend({
+			variableContainer: KWA,
+			variableName: 'input',
+			maxLength: 10,
+			textOptions: {
+				font: '32px Droid Sans Mono',
+				fill: '#fff',
+				align: 'center'
+			}
+		}, options);
+		var self = this;
+
+		this.mode = this.INPUT_MODE.ADVANCING;
+		this.advanceText();
+		this.mode = this.INPUT_MODE.STOPPED;
+		this.keyInputEnabled = false;
+
+		var inputText = this.add.text(this.world.centerX, this.world.centerY, "Type your name.", options.textOptions);
+		inputText.anchor.setTo(0.5);
+		var actualText = "";
+
+		var inputHandler = function(evt) {
+			if (evt.keyCode == 13) {
+				self.mode = self.INPUT_MODE.WAITING;
+				self.advanceText();
+			} else if (actualText.length < options.maxLength) {
+				actualText += String.fromCharCode(evt.keyCode);
+				inputText.text = actualText;
+			}
+			return false;
+		};
+        window.addEventListener('keypress', inputHandler, false);
+
+		KWA.fn._cleanupFunctions.push(function() {
+        	window.removeEventListener('keypress', inputHandler, false);
+        	options.variableContainer[options.variableName] = actualText.trim();
+        	inputText.destroy();
+			self.keyInputEnabled = true;
+		});
 	},
 
 	fade: function(options) {
