@@ -394,6 +394,8 @@ var KWA = window.KWA = window.KWA || {};
 			this.advanceText();
 		} else if (key == 16) { // shift
 			this.fastForward(true);
+		} else if (key == 77) { // M
+			this.sound.volume = (this.sound.volume === 0) ? 1 : 0;
 		}
 	},
 	onKeyUp: function(key) {
