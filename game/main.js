@@ -54,12 +54,16 @@ window.onload = function() {
                     var index = sheet[0].split(".")[0].replace(/(\/|\\)/g, '');
                     this.load.spritesheet(index, KWA.IMAGE_DIR + sheet[0], sheet[1], sheet[2], sheet[3]);
                 }, this);
+                game.load.audio('main', ['audio/maintheme.mp3', 'audio/maintheme.ogg']);
+                game.load.audio('generic', ['audio/generictheme.mp3', 'audio/generictheme.ogg']);
+                game.load.audio('may', ['audio/maytheme.mp3', 'audio/maytheme.ogg']);
+                game.load.audio('jay', ['audio/jaytheme.mp3', 'audio/jaytheme.ogg']);
             },
             create: function() {
                 this.preloadBar.cropEnabled = false;
             },
             update: function() {
-                if (!this.ready) {
+                if (this.cache.isSoundDecoded('main') && !this.ready) {
                     this.ready = true;
                     this.state.start('startmenu');
                 }
@@ -71,12 +75,16 @@ window.onload = function() {
                 this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
             },
             create:function () {
+                var music = game.add.audio('main');
+                music.play();
+
                 var startscreen = this.add.button(0, 0, 'startscreen', function() {  
                     if (canStart) {
                         canStart = false;
                         KWA.fn.call(this, 'fadeOut', {
                             duration: 1000,
                             onComplete: function() {
+                                music.stop();
                                 this.state.start('datingsim', true, false, KWA.SCRIPT);
                             }
                         });

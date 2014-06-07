@@ -6,6 +6,7 @@ var KWA = window.KWA = window.KWA || {};
 * name - STR - the name of the speaker of this dialogue - default: ''
 * dialogue - STR - the text dialogue in this line - default: ''
 * background - STR - if not null, switches to the background sprite of this name - default: null
+* music - STR - if not null, switches to the background music of this name - default: null
 * characterLeft - STR - switches left character to the sprite of this name - default: 'blank'
 * characterRight - STR - switches right character to the sprite of this name - default: 'blank'
 * cancelFastForward - bool - if set to true, forcibly disables fastforward at start of this line - default: false
@@ -25,11 +26,11 @@ var KWA = window.KWA = window.KWA || {};
 *			NULL - cannot advance at all from this line, so there better be a function that does something here
 \* * * * * * * * * * * * * * * * * * * */
 KWA.SCRIPT = [
-	/* INTRO */ { name: "???", dialogue: "Welcome.", background: 'bgstarry'},
+	/* INTRO */ { name: "???", dialogue: "Welcome.", background: 'bgstarry', music: ''},
 	{ name: "???", dialogue: "Who are you..?", func: 'getAndSaveInputString', options: { variableName: 'mc'}},
 	{ name: "???", dialogue: "You are '{mc}'. Is this correct?", advance: [{choice: "Yes", advance: 1}, {choice: "No", advance: -1}] },
 	{ name: "???", dialogue: "Welcome, {mc}.", func: ['fadeOut', function() { this.mode = this.INPUT_MODE.STOPPED; }], options: {onComplete: function() { this.mode = this.INPUT_MODE.WAITING; this.advanceText(); }}},
-	{ label: 'intro', name: "???", dialogue: "You are awake.", background: 'bgstarry', func: 'fadeIn', options: {duration: 2000}},
+	{ label: 'intro', name: "???", dialogue: "You are awake.", background: 'bgstarry', music: '', func: 'fadeIn', options: {duration: 2000}},
 	{ name: "???", dialogue: "Time is an infinite plane."},
 	{ name: "???", dialogue: "We follow a straight line, oblivious to our surroundings."},
 	{ name: "???", dialogue: "We know, deep down, that there is more out there. But we choose to ignore it."},
@@ -40,7 +41,7 @@ KWA.SCRIPT = [
 	{ name: "???", dialogue: "Open your eyes, and shatter the illusion."},
 	{ name: "???", dialogue: "You are awake."},
 	/* APARTMENT */ { name: "Window", dialogue: "*crash*", background: 'bgroom', func: 'screenShake'},
-	{ name: "{mc}", dialogue: "What the hell was that?!"},
+	{ name: "{mc}", dialogue: "What the hell was that?!", music: 'generic'},
 	{ name: "{mc}", dialogue: "(Oh, it was just a crazy dream... I really need to stop playing so many dating sims before bed!)"},
 	{ name: "{mc}", dialogue: "(Haha yeah right, they’re way too kawaii for me to resist~~)"},
 	{ name: "{mc}", dialogue: "*gets up from bed*"},
@@ -70,7 +71,7 @@ KWA.SCRIPT = [
 	{ name: "{mc}", dialogue: "*presses the BLUE button*"},
 	{ name: "{mc}", dialogue: "Wooaaahhhh!!!", func: ['fadeOut', 'fadeOut'], options: {color: 0x0000ff, onComplete: function() { this.advanceText(); }}, advance: 'jayintro'},
 	/* MAY INTRO */ { label: 'mayintro', name: "{mc}", dialogue: "...", background: 'bgmanor', func: 'fadeIn', options: {duration: 2000}},
-	{ name: "{mc}", dialogue: "Ow... my head"},
+	{ name: "{mc}", dialogue: "Ow... my head", music: 'may'},
 	{ name: "{mc}", dialogue: "*peels body off floor and looks around*"},
 	{ name: "{mc}", dialogue: "(What just happened? Where am I? It looks like the foyer of some sort of old style mansion.)"},
 	{ name: "{mc}", dialogue: "(Yeah, just look at these baroque stone pillars and intricately crafted oak furniture. This is definitely the kind of stuff I pretend to know about in order to sound intellectual and impress people.)"},
@@ -167,7 +168,7 @@ KWA.SCRIPT = [
 	{ name: "{mc}", dialogue: "Seriously? Even I know how lame of a physics joke that was...", characterRight: 'maysexy'},
 	{ name: "May", dialogue: "Give me a break! I’m new to this!", characterRight: 'mayhappy', func: ['characterRightSlideOut', 'characterRightFadeOut'], options: {duration: 2000}},
 	{ name: "{mc}", dialogue: "...", func: 'fadeOut', options: {duration: 2000, onComplete: function() { this.advanceText(); }}},
-	{ name: "???", dialogue: "You have opened your eyes to a truth of the universe.", background: 'bgstarry', func: 'fadeIn'},
+	{ name: "???", dialogue: "You have opened your eyes to a truth of the universe.", background: 'bgstarry', music: 'main', func: 'fadeIn'},
 	{ name: "???", dialogue: "You have acquired the SOUL OF COURAGE.", func: 'acquireCourage'},
 	{ name: "???", dialogue: "You are awake.", func: 'fadeOut', options: {duration: 2000, onComplete: function() { this.advanceText(); }}},
 	{ name: "{mc}", dialogue: "...", background: 'bgmanor', func: 'fadeIn'},
@@ -179,7 +180,7 @@ KWA.SCRIPT = [
 	{ name: "May", dialogue: "{mc}, I love yo--", characterRight: 'maysexy'},
 	{ name: "{mc}", dialogue: "*presses green button*", characterRight: 'maysexy', func: ['fadeOut', 'fadeOut'], options: {color: 0x00ff00, onComplete: function() { this.advanceText(); }}, advance: 'intro'},
 	/* JAY INTRO */ { label: 'jayintro', name: "{mc}", dialogue: "...", background: 'bgmoon', func: 'fadeIn', options: {duration: 2000}},
-	{ name: "{mc}", dialogue: "*opens eyes to see the vast expanse of space above*"},
+	{ name: "{mc}", dialogue: "*opens eyes to see the vast expanse of space above*", music: 'jay'},
 	{ name: "{mc}", dialogue: "(What just happened? Where am I? Are those stars..?)"},
 	{ name: "{mc}", dialogue: "(What is this soft material I’m laying on? It feels artificial, but also organic. Is this grass?)"},
 	{ name: "{mc}", dialogue: "*gets up, struggling to maintain balance*"},
@@ -257,12 +258,12 @@ KWA.SCRIPT = [
 	{ name: "{mc}", dialogue: "Jay, wait! I love yo--", characterRight: 'jaynormal'},
 	{ name: "Jay", dialogue: "...", characterRight: 'jaysexy', func: ['fadeOut', 'fadeOut', 'characterRightFadeOut'], options: {color: 0x00ff00, onComplete: function() { this.advanceText(); }}, advance: 'intro'},
 	/* JAY GOOD END */ { label: 'jaygoodend', name: "{mc}", dialogue: "(What is this feeling? I can sense someone trying to speak to me...)", characterRight: 'jaysad'},
-	{ name: "{mc}", dialogue: "To achieve what you truly desire in life, you must take risks.", characterRight: 'jaysad', characterLeft: 'maynormal', func: 'characterLeftFadeIn'},
+	{ name: "{mc}", dialogue: "To achieve what you truly desire in life, you must take risks.", music: 'may', characterRight: 'jaysad', characterLeft: 'maynormal', func: 'characterLeftFadeIn'},
 	{ name: "{mc}", dialogue: "(May... you’re lending me your strength. I will treasure your words.)", characterRight: 'jaysad', characterLeft: 'maynormal'},
 	{ name: "May", dialogue: "I’m glad. I am a part of you now, so let’s do this together!", characterRight: 'jaysad', characterLeft: 'mayhappy'},
 	{ name: "May", dialogue: "By the way, I loved that thing you did with your tongue...", characterRight: 'jaysad', characterLeft: 'mayhappy', func: 'characterLeftFadeOut', options: {duration: 3000}},
 	{ name: "{mc}", dialogue: "(...thank you, May.)", characterRight: 'jaysad'},
-	{ name: "{mc}", dialogue: "...", characterRight: 'jaysad'},
+	{ name: "{mc}", dialogue: "...", music: 'jay', characterRight: 'jaysad'},
 	{ name: "{mc}", dialogue: "I’ll do it.", characterRight: 'jaysad'},
 	{ name: "Jay", dialogue: "Don’t be silly, {mc}. I’m not worth it.", characterRight: 'jaysad'},
 	{ name: "{mc}", dialogue: "You’re worth it to me!", characterRight: 'jaysad', func: 'screenShake'},
@@ -292,7 +293,7 @@ KWA.SCRIPT = [
 	{ name: "Jay", dialogue: "*grabs a handful of petals from reddish flowers sprouting nearby in the grass*", characterRight: 'jaysexy'},
 	{ name: "{mc}", dialogue: "Jay! Keep those things away from me!", characterRight: 'jaysexy'},
 	{ name: "{mc}", dialogue: "...", characterRight: 'jaysexy', func: 'fadeOut', options: {duration: 2000, onComplete: function() { this.advanceText(); }}},
-	{ name: "???", dialogue: "You have opened your eyes to a truth of the universe.", background: 'bgstarry', func: 'fadeIn'},
+	{ name: "???", dialogue: "You have opened your eyes to a truth of the universe.", background: 'bgstarry', music: 'main', func: 'fadeIn'},
 	{ name: "???", dialogue: "You have acquired the SOUL OF OPTIMISM.", func: 'acquireOptimism'},
 	{ name: "???", dialogue: "You are awake.", func: 'fadeOut', options: {duration: 2000, onComplete: function() { this.advanceText(); }}},
 	{ name: "{mc}", dialogue: "...", background: 'bgmoon', characterRight: 'jaysexy', func: ['fadeIn', 'characterRightFadeIn']},
@@ -319,7 +320,7 @@ KWA.SCRIPT = [
 	{ name: "{mc}", dialogue: "*presses the green button*", characterRight: 'jaysexy'},
 	{ name: "{mc}", dialogue: "...", characterRight: 'jaysexy', func: ['fadeOut', 'fadeOut'], options: {color: 0x00ff00, onComplete: function() { this.advanceText(); }}, advance: 'intro'},
 	/* TRUE END */ { label: 'trueend', name: "{mc}", dialogue: "...forget everything and come with me!", characterRight: 'maynormal'},
-	{ name: "Jay", dialogue: "You’re taking your destiny into your own hands now, {mc}.", characterRight: 'maynormal', characterLeft: 'jayhappy', func: 'characterLeftFadeIn'},
+	{ name: "Jay", dialogue: "You’re taking your destiny into your own hands now, {mc}.", music: 'jay', characterRight: 'maynormal', characterLeft: 'jayhappy', func: 'characterLeftFadeIn'},
 	{ name: "{mc}", dialogue: "(Jay, are you ready to meet a new friend?)", characterRight: 'maynormal', characterLeft: 'jayhappy'},
 	{ name: "{mc}", dialogue: "(Get ready, we’re coming to see you!)", characterRight: 'maynormal', characterLeft: 'jayhappy'},
 	{ name: "Jay", dialogue: "I’ve been missing you for a long time, {mc}", characterRight: 'maynormal', characterLeft: 'jaysexy'},
@@ -327,21 +328,21 @@ KWA.SCRIPT = [
 	{ name: "{mc}", dialogue: "(Jay, with your help, and May’s, I can finally make something of myself.)", characterRight: 'maynormal', characterLeft: 'jaynormal'},
 	{ name: "{mc}", dialogue: "(Sit tight, I’ll see you soon.)", characterRight: 'maynormal', characterLeft: 'jaynormal'},
 	{ name: "Jay", dialogue: "*leaps forwards for a kiss, but vanishes right before your eyes*", characterRight: 'maynormal', characterLeft: 'jaysexy', func: ['characterLeftShake', 'characterLeftFadeOut']},
-	{ name: "{mc}", dialogue: "...", characterRight: 'maynormal'},
+	{ name: "{mc}", dialogue: "...", music: 'may', characterRight: 'maynormal'},
 	{ name: "May", dialogue: "Come with you? But why? And where?", characterRight: 'maynormal'},
 	{ name: "{mc}", dialogue: "May, I need you to help me turn my life around. Let’s let go of our pasts and rush head first into the future!", characterRight: 'maynormal'},
 	{ name: "{mc}", dialogue: "Take my hand.", characterRight: 'maysexy'},
 	{ name: "{mc}", dialogue: "*pulls May close and readies the Wormhole*", characterRight: 'maysexy', func: 'characterRightShake'},
 	{ name: "{mc}", dialogue: "Hold on tight!", characterRight: 'maysexy'},
 	{ name: "{mc}", dialogue: "...", characterRight: 'maysexy', func: ['fadeOut', 'fadeOut'], options: {color: 0x0000ff, onComplete: function() { this.advanceText(); }}},
-	{ name: "{mc}", dialogue: "...", background: 'bgmoon', characterRight: 'maynormal', func: 'fadeIn'},
+	{ name: "{mc}", dialogue: "...", background: 'bgmoon', music: 'jay', characterRight: 'maynormal', func: 'fadeIn'},
 	{ name: "Jay", dialogue: "{mc}!", characterRight: 'maynormal', characterLeft: 'jayhappy', func: ['characterLeftSlideIn', 'characterLeftFadeIn']},
 	{ name: "Jay", dialogue: "You came back! And you brought a... friend?", characterRight: 'maynormal', characterLeft: 'jayhappy'},
 	{ name: "{mc}", dialogue: "This is May. No time to explain, just grab on!", characterRight: 'maynormal', characterLeft: 'jayhappy'},
 	{ name: "{mc}", dialogue: "*pulls Jay in with the group and readies the Wormhole once again*", characterRight: 'maynormal', characterLeft: 'jayhappy', func: 'characterLeftShake'},
 	{ name: "{mc}", dialogue: "Here we go!", characterRight: 'maynormal', characterLeft: 'jaynormal'},
 	{ name: "{mc}", dialogue: "...", characterRight: 'maynormal', characterLeft: 'jaynormal', func: ['fadeOut', 'fadeOut'], options: {color: 0x00ff00, onComplete: function() { this.advanceText(); }}},
-	{ name: "Jay", dialogue: "Where are we..?", background: 'bgroom', characterRight: 'maynormal', characterLeft: 'jaynormal', func: 'fadeIn'},
+	{ name: "Jay", dialogue: "Where are we..?", background: 'bgroom', music: 'generic', characterRight: 'maynormal', characterLeft: 'jaynormal', func: 'fadeIn'},
 	{ name: "{mc}", dialogue: "This is my apartment in 2014.", characterRight: 'maynormal', characterLeft: 'jaynormal'},
 	{ name: "May", dialogue: "Incredible! Look at all this wonderful modern technology! My friends in the 19th century would never believe this!", characterRight: 'mayhappy', characterLeft: 'jaynormal'},
 	{ name: "Jay", dialogue: "Are you from the 19th century, May?", characterRight: 'mayhappy', characterLeft: 'jaynormal'},
@@ -392,7 +393,7 @@ KWA.SCRIPT = [
 	{ name: "May", dialogue: "*leaps on you as well*", characterRight: 'maysexy', characterLeft: 'jaysexy', func: 'characterRightShake'},
 	{ name: "{mc}", dialogue: "... I love you guys", characterRight: 'maysexy', characterLeft: 'jaysexy'},
 	{ name: "{mc}", dialogue: "...", characterRight: 'maysexy', characterLeft: 'jaysexy', func: 'fadeOut', options: {onComplete: function() { this.advanceText(); }}},
-	{ name: "???", dialogue: "...", background: 'bgstarry', func: 'fadeIn', options: {duration: 2000}},
+	{ name: "???", dialogue: "...", background: 'bgstarry', music: 'main', func: 'fadeIn', options: {duration: 2000}},
 	{ name: "???", dialogue: "You have used the SOUL OF COURAGE and the SOUL OF OPTIMISM to discover the truth of the universe."},
 	{ name: "???", dialogue: "You have full access to the infinite complexities of the time-space continuum."},
 	{ name: "???", dialogue: "What you do with this power is up to you."},
@@ -403,7 +404,7 @@ KWA.SCRIPT = [
 	{ name: "@foolmoron", dialogue: "Tell me what you think about the dating sim on twitter! #KawaiiAishiteruWormholeAdventure"},
 	{ name: "@foolmoron", dialogue: "Keep a look out for the sequel, Kawaii Aishiteru Wormhole Adventure II..."},
 	{ name: "@foolmoron", dialogue: "...otherwise known as... KAWAII"},
-	{ name: "@foolmoron", dialogue: "Yeah, everything about this is dumb, I know...", func: 'fadeOut', options: {duration: 3000, onComplete: function() { this.state.start('startmenu'); }}, advance: null}
+	{ name: "@foolmoron", dialogue: "Yeah, everything about this is dumb, I know...", music: '', cancelFastForward: true, func: 'fadeOut', options: {duration: 3000, onComplete: function() { this.state.start('startmenu'); }}, advance: null}
 ];
 
 //lint the script lines to make sure there are no hard to find errors
@@ -414,6 +415,7 @@ KWA.SCRIPT = [
 		'name',
 		'dialogue',
 		'background',
+		'music',
 		'characterLeft',
 		'characterRight',
 		'cancelFastForward',

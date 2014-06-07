@@ -76,6 +76,14 @@ var KWA = window.KWA = window.KWA || {};
 	create: function() {
 		this.stage.setBackgroundColor('#B4DDE9');
 
+		this.musics = {
+			main: this.add.audio('main', 1, true),
+			generic: this.add.audio('generic', 1, true),
+			may: this.add.audio('may', 1, true),
+			jay: this.add.audio('jay', 1, true)
+		};
+		this.currentlyPlayingMusic = '';
+
 		//objects are drawn in create-order so do background stuff first
 		this.background = this.add.sprite(this.world.centerX, this.world.centerY, 'blank');
 		this.background.anchor.setTo(0.5);      
@@ -147,6 +155,7 @@ var KWA = window.KWA = window.KWA || {};
 			name: '',
 			dialogue: '',
 			background: null,
+			music: null,
 			characterLeft: 'blank',
 			characterRight: 'blank',
 			cancelFastForward: false,
@@ -183,6 +192,19 @@ var KWA = window.KWA = window.KWA || {};
 		if (this.currentLine.background) {
 			this.background.loadTexture(this.currentLine.background);
 		}
+
+		if (this.currentLine.music != null) {
+			if (this.currentLine.music != this.currentlyPlayingMusic) {
+				for (var i in this.musics) {
+					this.musics[i].stop();
+				}
+				if (this.musics[this.currentLine.music]) {
+					this.musics[this.currentLine.music].play();
+				}
+				this.currentlyPlayingMusic = this.currentLine.music;
+			}
+		}
+
 		this.characterLeft.loadTexture(this.currentLine.characterLeft);
 		this.characterRight.loadTexture(this.currentLine.characterRight);
 		this.characterLeft.alpha = 1;
