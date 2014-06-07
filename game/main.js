@@ -54,10 +54,10 @@ window.onload = function() {
                     var index = sheet[0].split(".")[0].replace(/(\/|\\)/g, '');
                     this.load.spritesheet(index, KWA.IMAGE_DIR + sheet[0], sheet[1], sheet[2], sheet[3]);
                 }, this);
-                game.load.audio('main', ['audio/maintheme.mp3', 'audio/maintheme.ogg']);
-                game.load.audio('generic', ['audio/generictheme.mp3', 'audio/generictheme.ogg']);
-                game.load.audio('may', ['audio/maytheme.mp3', 'audio/maytheme.ogg']);
-                game.load.audio('jay', ['audio/jaytheme.mp3', 'audio/jaytheme.ogg']);
+                game.load.audio('main', 'audio/maintheme.mp3');
+                game.load.audio('generic', 'audio/generictheme.mp3');
+                game.load.audio('may', 'audio/maytheme.mp3');
+                game.load.audio('jay', 'audio/jaytheme.mp3');
             },
             create: function() {
                 this.preloadBar.cropEnabled = false;
