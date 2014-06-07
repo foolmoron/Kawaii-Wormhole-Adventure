@@ -62,7 +62,8 @@ window.onload = function() {
 				this.preloadBar.cropEnabled = false;
 			},
 			update: function() {
-				if (this.cache.isSoundDecoded('main') && !this.ready) {
+				if ((!this.cache._sounds['main'].data.length) || // data is null in firefox for some reason... so just ignore sound and load the start menu
+					(this.cache.isSoundDecoded('main') && !this.ready)) {
 					this.ready = true;
 					this.state.start('startmenu');
 				}
