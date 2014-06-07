@@ -6,7 +6,7 @@ var KWA = window.KWA = window.KWA || {};
 
 	NAMEBOX_YOFFSET: 410,
 	NAME_XOFFSET: 125,
-	NAME_YOFFSET: 428,
+	NAME_YOFFSET: 410,
 	NAME_OPTIONS: {
 		font: '28px Droid Sans Mono',
 		fill: '#fff',
@@ -95,7 +95,7 @@ var KWA = window.KWA = window.KWA || {};
 
 		this.namebox = this.add.sprite(0, this.NAMEBOX_YOFFSET, 'namebox');	
 		this.name = this.add.text(this.NAME_XOFFSET, this.NAME_YOFFSET, "", this.NAME_OPTIONS);
-		this.name.anchor.setTo(0.5);
+		this.name.anchor.setTo(0.5, 0);
 
 		this.dialoguebox = this.add.sprite(0, this.DIALOGUEBOX_YOFFSET, 'dialoguebox');
 		this.dialogue = this.add.text(this.DIALOGUE_XOFFSET, this.DIALOGUE_YOFFSET, "", this.DIALOGUE_OPTIONS);
