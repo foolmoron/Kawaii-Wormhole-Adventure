@@ -54,27 +54,27 @@ _.extend(KWA.fn, {
 			}
 			return false;
 		};
-        window.addEventListener('keypress', inputHandler, false);
+		window.addEventListener('keypress', inputHandler, false);
 
-        //mobile specific handling
-        if (!this.game.device.desktop) {
-        	setTimeout(function() {
-	        	var name = null;
-	        	while (!name) {
-	        		name = prompt("Type your name.");
-	        	}
-	        	name = name.substring(0, options.maxLength);
+		//mobile specific handling
+		if (!this.game.device.desktop) {
+			setTimeout(function() {
+				var name = null;
+				while (!name) {
+					name = prompt("Type your name.");
+				}
+				name = name.substring(0, options.maxLength);
 				actualText = name;
 				inputText.text = actualText;
 				self.mode = self.INPUT_MODE.WAITING;
 				self.advanceText();
-        	}, 500);
-        }
+			}, 500);
+		}
 
 		KWA.fn._cleanupFunctions.push(function() {
-        	window.removeEventListener('keypress', inputHandler, false);
-        	options.variableContainer[options.variableName] = actualText.trim();
-        	inputText.destroy();
+			window.removeEventListener('keypress', inputHandler, false);
+			options.variableContainer[options.variableName] = actualText.trim();
+			inputText.destroy();
 			self.keyInputEnabled = true;
 		});
 	},
