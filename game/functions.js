@@ -45,11 +45,12 @@ _.extend(KWA.fn, {
 		var actualText = "";
 
 		var inputHandler = function(evt) {
-			if (evt.keyCode == 13) {
+			var key = evt.keyCode || evt.which;
+			if (key == 13) {
 				self.mode = self.INPUT_MODE.WAITING;
 				self.advanceText();
 			} else if (actualText.length < options.maxLength) {
-				actualText += String.fromCharCode(evt.keyCode);
+				actualText += String.fromCharCode(key);
 				inputText.text = actualText;
 			}
 			return false;
