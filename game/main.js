@@ -22,8 +22,7 @@ KWA.IMAGES = [
 	'jaynormal.png',
 	'jayhappy.png',
 	'jaysad.png',
-	'jaysexy.png',
-	'jayangry.png'
+	'jaysexy.png'
 ];
 KWA.SHEETS = [
 	['choicebox.png', 600, 40, 3]
