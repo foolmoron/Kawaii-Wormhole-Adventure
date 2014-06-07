@@ -68,7 +68,7 @@ _.extend(KWA.fn, {
 				inputText.text = actualText;
 				self.mode = self.INPUT_MODE.WAITING;
 				self.advanceText();
-        	}, 1000);
+        	}, 500);
         }
 
 		KWA.fn._cleanupFunctions.push(function() {
