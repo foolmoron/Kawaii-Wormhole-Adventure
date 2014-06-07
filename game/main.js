@@ -75,7 +75,7 @@ window.onload = function() {
                 this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
             },
             create:function () {
-                var music = game.add.audio('main');
+                var music = game.add.audio('main', 1, true);
                 music.play();
 
                 var startscreen = this.add.button(0, 0, 'startscreen', function() {  
