@@ -129,7 +129,7 @@ KWA.SCRIPT = [
 	{ name: "{mc}", dialogue: "Your theory...? I thought your father was the physicist.", characterRight: 'mayhappy'},
 	{ name: "May", dialogue: "Oh, he is, but I help him with his research. I even came up with the theory that won him the Ecchi Prize.", characterRight: 'maynormal'},
 	{ name: "{mc}", dialogue: "That’s amazing! But then why are you treated like a maid? You should be the one with the Ecchi Prize, and the fame.", characterRight: 'maynormal'},
-	{ name: "{mc}", dialogue: "You really must be from a different time. In our age, women cannot be scientists. If the people knew that I am the secret behind my father’s research, we would persecuted to the ends of the world. Our lives would never be the same.", characterRight: 'maysad'},
+	{ name: "May", dialogue: "You really must be from a different time. In our age, women cannot be scientists. If the people knew that I am the secret behind my father’s research, we would persecuted to the ends of the world. Our lives would never be the same.", characterRight: 'maysad'},
 	{ name: "{mc}", dialogue: "That is a tough situation, but...", characterRight: 'maysad', advance: [{choice: "...your survival is your top priority.", advance: 'maybadend2'}, {choice: "...you don’t want things to be the same.", advance: 'maygoodend'}, {choice: "...forget everything and come with me!", advance: 'trueend', condition: function() { return localStorage.getItem('optimism'); }}]},
 	/* MAY BAD END 2 */ { label: 'maybadend2', name: "{mc}", dialogue: "...your survival should be your top priority.", characterRight: 'maysad'},
 	{ name: "May", dialogue: "You really think so?", characterRight: 'maysad'},
