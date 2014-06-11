@@ -44,7 +44,7 @@ _.extend(KWA.fn, {
 		inputText.anchor.setTo(0.5);
 		var actualText = "";
 
-		var inputHandler = function(evt) {
+		var keypressHandler = function(evt) {
 			var key = evt.keyCode || evt.which;
 			if (key == 13) {
 				self.mode = self.INPUT_MODE.WAITING;
@@ -55,7 +55,17 @@ _.extend(KWA.fn, {
 			}
 			return false;
 		};
-		window.addEventListener('keypress', inputHandler, false);
+		var keydownHandler = function(evt) {
+			var key = evt.keyCode || evt.which;
+			if (key == 8 || // backspace
+				key == 46) { // delete
+				actualText = actualText.substring(0, actualText.length - 1);
+				inputText.text = actualText;
+				evt.preventDefault(); // stops backspace from taking browser back
+			}
+		};
+		window.addEventListener('keypress', keypressHandler, false);
+		window.addEventListener('keydown', keydownHandler, false);
 
 		//mobile specific handling
 		if (!this.game.device.desktop) {
@@ -73,7 +83,8 @@ _.extend(KWA.fn, {
 		}
 
 		KWA.fn._cleanupFunctions.push(function() {
-			window.removeEventListener('keypress', inputHandler, false);
+			window.removeEventListener('keypress', keypressHandler, false);
+			window.removeEventListener('keydown', keydownHandler, false);
 			options.variableContainer[options.variableName] = actualText.trim();
 			inputText.destroy();
 			self.keyInputEnabled = true;
