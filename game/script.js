@@ -102,6 +102,7 @@ KWA.SCRIPT = [
     { label: 'maybadend1green', name: "{mc}", dialogue: "*presses the GREEN button*"},
     { name: "{mc}", dialogue: "...", func: ['fadeOut', 'fadeOut'], options: {color: 0x00ff00, onComplete: function() { this.advanceText(); }}, advance: 'intro'},
     { label: 'maybadend1blue', name: "{mc}", dialogue: "*presses the BLUE button*"},
+    { name: "{mc}", dialogue: "(Nothing happened... let’s try this again)", advance: [{choice: "*presses the RED button*", advance: 'maybadend1red'}, {choice: "*presses the GREEN button*", advance: 'maybadend1green'}, {choice: "*presses the BLUE button*", advance: 'maybadend1blue'}]},
     /* MAY GOOD PATH */ { label: 'maygoodpath', name: "{mc}", dialogue: "I’m {mc}. What’s your name?", characterRight: 'mayangry'},
     { name: "???", dialogue: "Oh... I’m Maybelline von Hautensworth III, but you can call me May.", characterRight: 'maynormal'},
     { name: "May", dialogue: "Why are you here? Where did you come from? And what are those strange clothes you’re wearing?", characterRight: 'maynormal'},
