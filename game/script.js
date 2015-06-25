@@ -57,7 +57,7 @@ KWA.SCRIPT = [
     { name: "{mc}", dialogue: "Crap, I’m gonna be late to wo--"},
     { name: "{mc}", dialogue: "(Oh wait, I don’t have work today, I got fired yesterday.)"},
     { name: "{mc}", dialogue: "(Why can’t I hold down a job for more than a couple of months? I’m not going to be able to afford rent if this keeps up...)"},
-    { name: "{mc}", dialogue: "(Uh oh, if lose this apartment, where am I going to draw my manga? Well, I guess those things are worthless anyway...)"},
+    { name: "{mc}", dialogue: "(Uh oh, if I lose this apartment, where am I going to draw my manga? Well, I guess those things are worthless anyway...)"},
     { name: "{mc}", dialogue: "*sigh* Now what?"},
     { name: "{mc}", dialogue: "(Oh right, this Wormhole thing... I really should wait to have my life crisis until after I figure out what this is.)", func: 'fadeIn', options: {color: 0xffffff, duration: 300}},
     { name: "{mc}", dialogue: "(It’s a cold metallic box with three large buttons on it. There doesn’t seem to be any other way to interact with it. I really hope this doesn’t blow up in my face.)"},
