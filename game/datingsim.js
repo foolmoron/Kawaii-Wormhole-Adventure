@@ -82,6 +82,12 @@ var KWA = window.KWA = window.KWA || {};
             may: this.add.audio('may', 1, true),
             jay: this.add.audio('jay', 1, true)
         };
+        for (musicKey in this.musics) { // need to force a manual loop because the loop option doesn't quite work
+            this.musics[musicKey].onLoop.add(function() {
+                if (this.currentlyPlayingMusic in this.musics)
+                    this.musics[this.currentlyPlayingMusic].play('', 0, 1, true, true);
+            }, this);
+        }
         this.currentlyPlayingMusic = '';
 
         //objects are drawn in create-order so do background stuff first
