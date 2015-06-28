@@ -1,4 +1,5 @@
 var KWA = window.KWA = window.KWA || {};
+var isFF = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
 (KWA.STATES = KWA.STATES || {})['datingsim'] = {
 
@@ -6,7 +7,7 @@ var KWA = window.KWA = window.KWA || {};
 
     NAMEBOX_YOFFSET: 410,
     NAME_XOFFSET: 125,
-    NAME_YOFFSET: 410,
+    NAME_YOFFSET: isFF ? 418 : 410,
     NAME_OPTIONS: {
         font: '28px Droid Sans Mono',
         fill: '#fff',
@@ -45,7 +46,7 @@ var KWA = window.KWA = window.KWA || {};
     currentText: "",
     currentTextTimer: 0,
 
-    FASTFORWARD_INTERVAL: 1000/12, // millis per dialogue segment
+    FASTFORWARD_INTERVAL: 1000 / 12, // millis per dialogue segment
     currentFastForwardTimer: 0,
 
     FASTFORWARD_TAP_HOLD_TIME: 1000,
@@ -84,8 +85,12 @@ var KWA = window.KWA = window.KWA || {};
         };
         for (musicKey in this.musics) { // need to force a manual loop because the loop option doesn't quite work
             this.musics[musicKey].onLoop.add(function() {
-                if (this.currentlyPlayingMusic in this.musics)
+                if (this.currentlyPlayingMusic in this.musics) {
+                    for (var musicKey in this.musics) {
+                        this.musics[musicKey].stop();
+                    }
                     this.musics[this.currentlyPlayingMusic].play('', 0, 1, true, true);
+                }
             }, this);
         }
         this.currentlyPlayingMusic = '';
@@ -111,7 +116,7 @@ var KWA = window.KWA = window.KWA || {};
             newChoiceBox.anchor.setTo(0.5);
             newChoiceBox.choiceID = i;
             newChoiceBox.visible = false;
-            var newChoiceText = this['choicetext' + i] = this.add.text(this.CHOICES_XOFFSET, this.CHOICES_YOFFSET + (this.CHOICES_YGAP * i), "TEST " + i, this.CHOICETEXT_OPTIONS);
+            var newChoiceText = this['choicetext' + i] = this.add.text(this.CHOICES_XOFFSET, this.CHOICES_YOFFSET + (this.CHOICES_YGAP * i) + (isFF ? 6 : 0), "TEST " + i, this.CHOICETEXT_OPTIONS);
             newChoiceText.anchor.setTo(0.5);
             newChoiceText.visible = false;
         }
